@@ -365,22 +365,36 @@ class DeveloperDataSeeder {
     }
 
     private static void createGameAction(Session session, User player, Random random) {
-        def round = session.rounds ? session.rounds[0] : null
-        if (!round && session.rounds?.size() > 0) {
-            round = session.rounds[0]
-        }
+        // Get or create round
+        def round = session.rounds && !session.rounds.empty ? session.rounds[0] : null
         if (!round) {
-            // Create round if it doesn't exist
+            // Create round if it doesn't exist - get players from participations
             def playersFromParticipations = session.participations?.collect { it.player }
-            def totalPlayers = playersFromParticipations?.size() ?: 0
-            def half = Math.min(6, (totalPlayers / 2).toInteger())
-            round = new SessionRound(
-                session: session,
-                playersForTeamA: playersFromParticipations?.take(half),
-                playersForTeamB: playersFromParticipations?.drop(half)?.take(6)
-            ).save(failOnError: true, flush: true)
-            session.addToRounds(round).save(failOnError: true, flush: true)
+            if (playersFromParticipations && !playersFromParticipations.empty) {
+                def totalPlayers = playersFromParticipations.size()
+                if (totalPlayers >= 1) {
+                    def half = Math.min(6, (totalPlayers / 2).toInteger())
+                    def teamAPlayers = playersFromParticipations.take(half)
+                    def teamBPlayers = playersFromParticipations.drop(half).take(6)
+                    // Only create round if at least one team has players
+                    if (!teamAPlayers.empty || !teamBPlayers.empty) {
+                        round = new SessionRound(session: session)
+                        // Add players to round using addTo* methods
+                        if (!teamAPlayers.empty) {
+                            teamAPlayers.each { round.addToPlayersForTeamA(it) }
+                        }
+                        if (!teamBPlayers.empty) {
+                            teamBPlayers.each { round.addToPlayersForTeamB(it) }
+                        }
+                        round.save(failOnError: true, flush: true)
+                        session.addToRounds(round).save(failOnError: true, flush: true)
+                    }
+                }
+            }
         }
+        
+        // Skip game action creation if no round could be created
+        if (!round) return
 
         // Create 1-3 game actions per player
         (1..(1 + random.nextInt(3))).each {
@@ -407,7 +421,7 @@ class DeveloperDataSeeder {
         if (!playerIds || playerIds.isEmpty()) return
         
         def voterPlayers = User.createCriteria().list {
-            id 'in', playerIds
+            'in' 'id', playerIds
             ne 'id', player.id
         }
         if (voterPlayers.isEmpty()) return

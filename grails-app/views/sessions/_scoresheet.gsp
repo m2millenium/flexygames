@@ -26,9 +26,10 @@
 				<g:set var="index" value="${0}" />
 				<g:if test="${sessionInstance.rounds.size() > 0}" >
 					<g:each in="${sessionInstance.rounds}" var="round">
-						<g:set var="index" value="${index + 1}" />
-						<g:set var="actionsNbrForTeamA" value="${round.getActionsByTeam(true).size()}" />
-						<g:set var="actionsNbrForTeamB" value="${round.getActionsByTeam(false).size()}" />
+						<g:if test="${round != null}">
+							<g:set var="index" value="${index + 1}" />
+							<g:set var="actionsNbrForTeamA" value="${round?.getActionsByTeam(true)?.size() ?: 0}" />
+							<g:set var="actionsNbrForTeamB" value="${round?.getActionsByTeam(false)?.size() ?: 0}" />
 						<td style="text-align: center">
 							<h3><g:message code="round" /> #${index}</h3>
 							<table>
@@ -64,13 +65,13 @@
 											</g:each>
 										</ul></td>
 								</tr>
-								<g:if test="${round.getUnattribuedActions(true).size() > 0 || round.getUnattribuedActions(false).size() > 0}">
+								<g:if test="${round?.getUnattribuedActions(true)?.size() > 0 || round?.getUnattribuedActions(false)?.size() > 0}">
 									<tr>
 										<td>
-											<g:message code="session.show.rounds.unattribuedActions" />: <b>${round.getUnattribuedActions(true).size()}</b>
+											<g:message code="session.show.rounds.unattribuedActions" />: <b>${round?.getUnattribuedActions(true)?.size() ?: 0}</b>
 										</td>
 										<td>
-											<g:message code="session.show.rounds.unattribuedActions" />: <b>${round.getUnattribuedActions(false).size()}</b>
+											<g:message code="session.show.rounds.unattribuedActions" />: <b>${round?.getUnattribuedActions(false)?.size() ?: 0}</b>
 										</td>
 									</tr>
 								</g:if>
@@ -129,7 +130,7 @@
 									            					<g:if test="${round.playersForTeamA.contains(p)}"><g:set var="defaultTeam" value="TeamA"/></g:if>
 									            					<g:if test="${round.playersForTeamB.contains(p)}"><g:set var="defaultTeam" value="TeamB"/></g:if>
 									            					<g:select name="player${p.id}Team" from="['NotPlayed', 'TeamA', 'TeamB']" value="${defaultTeam}"/>
-									            					<g:select name="player${p.id}Score" from="${0..10}" value="${round.getActionsByMainContributor(p).size()}" />
+									            																<g:select name="player${p.id}Score" from="${0..10}" value="${round?.getActionsByMainContributor(p)?.size() ?: 0}" />
 									            				</td>
 									            			</tr>
 								            			</g:each>
@@ -138,11 +139,11 @@
 								            			</tr>
 														<tr>
 															<td><g:message code="session.show.rounds.teamA" /></td>
-															<td><g:select name="unattribuedScoreForTeamA" from="${0..35}" value="${round.getUnattribuedActions(true).size()}" /></td>
+															<td><g:select name="unattribuedScoreForTeamA" from="${0..35}" value="${round?.getUnattribuedActions(true)?.size() ?: 0}" /></td>
 														</tr>
 														<tr>
 															<td><g:message code="session.show.rounds.teamB" /></td>
-															<td><g:select name="unattribuedScoreForTeamB" from="${0..35}" value="${round.getUnattribuedActions(false).size()}" /></td>
+															<td><g:select name="unattribuedScoreForTeamB" from="${0..35}" value="${round?.getUnattribuedActions(false)?.size() ?: 0}" /></td>
 														</tr>
 								            		</table>
 									        		<div class="buttons">
@@ -155,8 +156,9 @@
 								</g:if>
 							</table>
 						</td>
-					</g:each>
-				</g:if>
+						</g:if>
+						</g:each>
+						</g:if>
 				<g:else>
 					<td style="text-align: center">
 						<br />
@@ -181,7 +183,7 @@
 			    </tr>
 			</g:if>
 		</table>
-	</div>
-</div>
-</g:if>
+		</div>
+		</div>
+	</g:if>
 <g:set scope="request" var="timeAfterScoresheet" value="${java.lang.System.currentTimeMillis()}" />

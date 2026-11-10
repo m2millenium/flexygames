@@ -46,8 +46,10 @@ class User implements Comparable<User>, HttpSessionBindingListener {
 	Date waitingListLastDate
 
 	int scoreInCurrentSession // transient
-	Membership membershipInCurrentSession // transient
-	SortedSet<Team> teamsInCurrentSession = new TreeSet<Team>() // transient
+		Membership membershipInCurrentSession // transient
+		SortedSet<Team> teamsInCurrentSession = new TreeSet<Team>() // transient
+
+		int participationsInLast7Days // computed: participations in the last 7 days (from last Friday)
 
 	SortedSet<Role> roles
 	Set<Membership> memberships // Set instead of SortedSet to avoid a NPE on ManagerController.removeMembership()
@@ -81,9 +83,10 @@ class User implements Comparable<User>, HttpSessionBindingListener {
 	}
 
 	static transients = [ 'authService', 'name',
-						  'scoreInCurrentSession', 'membershipInCurrentSession', 'teamsInCurrentSession',
-						  'allSubscribedTeams', 'allSubscribedSessionGroups', 'allSessions',
-						  'wins', 'defeats', 'draws', 'rounds', 'votingScore', 'actionScore', 'effectiveParticipations' ]
+								  'scoreInCurrentSession', 'membershipInCurrentSession', 'teamsInCurrentSession',
+								  'allSubscribedTeams', 'allSubscribedSessionGroups', 'allSessions',
+								  'wins', 'defeats', 'draws', 'rounds', 'votingScore', 'actionScore', 'effectiveParticipations',
+								  'participationsInLast7Days' ]
 
 	// Be careful with the character encoding:
 	// - following line is ok in ANSI or ISO-8859
@@ -464,7 +467,6 @@ class User implements Comparable<User>, HttpSessionBindingListener {
 		def otherUsername = o.getUsername() ?: ''
 		return thisUsername.toLowerCase().compareTo(otherUsername.toLowerCase())
     }
-
     public String toString() {
         return getUsername()
     }
@@ -472,9 +474,39 @@ class User implements Comparable<User>, HttpSessionBindingListener {
 	void valueBound(HttpSessionBindingEvent event) {
 		Holders.grailsApplication.mainContext.authService.logonUser(this)
 	}
-	
+
 	void valueUnbound(HttpSessionBindingEvent event) {
 		Holders.grailsApplication.mainContext.authService.logoutUser(this)
 	}
 
+	///////////////////////////////////////////////////////////////////////////
+	// Computed fields
+	///////////////////////////////////////////////////////////////////////////
+
+	def getParticipationsInLast7Days() {
+		// Calculate last Friday (7 days ago from today)
+		Date now = new Date()
+		Date lastFriday = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+
+		// Find participations in the last 7 days where player was accepted or present
+		// Status codes for accepted/present: DONE_GOOD, DONE_LATE, DONE_BAD, APPROVED, APPROVED_EXTRA
+		def approvedStatuses = [
+			Participation.Status.DONE_GOOD.code,
+			Participation.Status.DONE_LATE.code,
+			Participation.Status.DONE_BAD.code,
+			Participation.Status.APPROVED.code,
+			Participation.Status.APPROVED_EXTRA.code
+		]
+
+		def participations = Participation.findAllByPlayerAndStatusCodeIn(this, approvedStatuses)
+
+		int count = 0
+		participations.each { p ->
+			Date sessionDate = p.session.date
+			if (sessionDate != null && sessionDate.getTime() >= lastFriday.getTime()) {
+				count++
+			}
+		}
+		return count
+	}
 }

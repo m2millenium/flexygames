@@ -22,10 +22,10 @@ class SessionRound /*implements Comparable<SessionRound> */{
 	static hasMany = [playersForTeamA: User, playersForTeamB: User, actions: GameAction]
 
 	static mapping = {
-		actions lazy: true, batchSize: 50, cascade: "all-delete-orphan"
-		playersForTeamA lazy: true, batchSize: 50
-		playersForTeamB lazy: true, batchSize: 50
-	}
+			actions lazy: true, batchSize: 50, cascade: "all-delete-orphan"
+			playersForTeamA lazy: true, batchSize: 50, joinTable: [name: 'session_round_team_a_players']
+			playersForTeamB lazy: true, batchSize: 50, joinTable: [name: 'session_round_team_b_players']
+		}
 	
 	static constraints = {
 		session()
@@ -41,7 +41,7 @@ class SessionRound /*implements Comparable<SessionRound> */{
 
 	
 	def getActionsByTeam(teamA) {
-		def actions = GameAction.where { sessionRound == sessionRound }.list()
+			def actions = GameAction.where { sessionRound == this }.list()
 		def result = []
 		def players = teamA ? playersForTeamA : playersForTeamB
 		actions.each{ action -> 
