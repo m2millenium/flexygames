@@ -15,8 +15,10 @@ class Role implements Comparable<Role> {
     }
 	
 	public int compareTo (Role o) {
-		if (o instanceof User) {
-			return name.compareTo(o.name)
+		if (o instanceof Role) {
+			String thisName = this.name ?: ''
+			String otherName = o.name ?: ''
+			return thisName.compareTo(otherName)
 		}
 		else return -1
 	}

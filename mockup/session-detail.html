@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Detail - FlexyGames Mockup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --gray: #f8f9fa;
+            --dark: #1a1a2e;
+            --background: #ffffff;
+            --surface: #ffffff;
+            --border: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--dark);
+            line-height: 1.5;
+            padding: 24px;
+        }
+        
+        /* Header */
+        .header {
+            max-width: 1200px;
+            margin: 0 auto 32px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: #6c757d;
+            text-decoration: none;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        
+        .back-link:hover {
+            color: var(--primary);
+        }
+        
+        .back-link::before {
+            content: "←";
+            margin-right: 8px;
+        }
+        
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        
+        .meta-info {
+            display: flex;
+            gap: 24px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .meta-label {
+            font-weight: 600;
+            color: #6c757d;
+        }
+        
+        .meta-value {
+            color: var(--dark);
+        }
+        
+        /* Score Summary */
+        .score-summary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        
+        .score-display {
+            font-size: 64px;
+            font-weight: 300;
+            color: white;
+            margin-bottom: 16px;
+        }
+        
+        .team-label {
+            font-size: 24px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.8);
+            margin-top: 8px;
+        }
+        
+        .team-score {
+            font-size: 32px;
+            font-weight: 400;
+            color: white;
+        }
+        
+        /* Teams Section */
+        .teams-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .team-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .team-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .team-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .team-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .team-a-icon {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .team-b-icon {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .player-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .player-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .player-item:last-child {
+            border-bottom: none;
+        }
+        
+        .player-name {
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .player-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-badge {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .action-badge.team-a {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .action-badge.team-b {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .action-badge.neutral {
+            background: #6c757d;
+            color: white;
+        }
+        
+        /* Rounds Section */
+        .rounds-section {
+            margin-bottom: 24px;
+        }
+        
+        .rounds-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        
+        .rounds-header h2 {
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        .rounds-count {
+            background: var(--gray);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #6c757d;
+        }
+        
+        .round-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .round-tab {
+            padding: 10px 16px;
+            border-radius: 6px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            font-weight: 600;
+            font-size: 14px;
+            color: #6c757d;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .round-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .round-tab:hover:not(.active) {
+            background: var(--gray);
+        }
+        
+        .round-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .round-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .round-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .round-scores {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        
+        .score-card {
+            background: var(--gray);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .score-card h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: #6c757d;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        
+        .score-card .score {
+            font-size: 28px;
+            font-weight: 300;
+            color: var(--dark);
+        }
+        
+        .score-card.win .score {
+            color: var(--success);
+        }
+        
+        .score-card.loss .score {
+            color: var(--danger);
+        }
+        
+        .score-card.draw .score {
+            color: #6c757d;
+        }
+        
+        .team-col { grid-template-columns: 120px 1fr; }
+        
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .stat-card {
+            background: var(--gray);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-card h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6c757d;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        
+        .stat-card .value {
+            font-size: 32px;
+            font-weight: 300;
+            color: var(--primary);
+        }
+        
+        /* Participation Table */
+        .participation-section {
+            margin-bottom: 24px;
+        }
+        
+        .participation-section h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        thead {
+            background: var(--primary);
+        }
+        
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: white;
+            font-size: 14px;
+        }
+        
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--dark);
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover td {
+            background: var(--gray);
+        }
+        
+        /* Action Buttons */
+        .actions-section {
+            margin-bottom: 24px;
+        }
+        
+        .actions-section h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 8px rgba(102,126,234,0.3);
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+            box-shadow: 0 4px 12px rgba(118,75,162,0.4);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary);
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .teams-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .round-scores {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+            
+            .score-display {
+                font-size: 48px;
+            }
+            
+            .round-scores {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/sessions/list" class="back-link">Back to Sessions</a>
+        <h1 class="title">Matchday 5 - Spring Tournament</h1>
+        <div class="meta-info">
+            <div class="meta-item">
+                <span class="meta-label">Date:</span>
+                <span class="meta-value">September 28, 2026</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Time:</span>
+                <span class="meta-value">14:00 - 16:30</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Playground:</span>
+                <span class="meta-value">Central Field</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Type:</span>
+                <span class="meta-value">Competition</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="score-summary">
+        <div class="score-display">12:11</div>
+        <div class="team-label">Team A vs Team B</div>
+        <div class="team-score">Team A: 12</div>
+        <div class="team-score">Team B: 11</div>
+    </div>
+    
+    <div class="teams-section">
+        <div class="team-card">
+            <div class="team-header">
+                <div class="team-icon team-a-icon">A</div>
+                <h3>Team A</h3>
+            </div>
+            <ul class="player-list">
+                <li class="player-item">
+                    <span class="player-name">Mario</span>
+                    <div class="player-actions">
+                        <span class="action-badge team-a">3</span>
+                        <span class="action-badge team-a">2</span>
+                    </div>
+                </li>
+                <li class="player-item">
+                    <span class="player-name">Luca</span>
+                    <div class="player-actions">
+                        <span class="action-badge team-a">5</span>
+                        <span class="action-badge team-a">1</span>
+                    </div>
+                </li>
+                <li class="player-item">
+                    <span class="player-name">Giulia</span>
+                    <div class="player-actions">
+                        <span class="action-badge team-a">4</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="team-card">
+            <div class="team-header">
+                <div class="team-icon team-b-icon">B</div>
+                <h3>Team B</h3>
+            </div>
+            <ul class="player-list">
+                <li class="player-item">
+                    <span class="player-name">Sara</span>
+                    <div class="player-actions">
+                        <span class="action-badge team-b">4</span>
+                        <span class="action-badge team-b">2</span>
+                    </div>
+                </li>
+                <li class="player-item">
+                    <span class="player-name">Marco</span>
+                    <div class="player-actions">
+                        <span class="action-badge team-b">3</span>
+                        <span class="action-badge team-b">3</span>
+                    </div>
+                </li>
+                <li class="player-item">
+                    <span class="player-name">Elena</span>
+                    <div class="player-actions">
+                        <span class="action-badge team-b">2</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="rounds-section">
+        <div class="rounds-header">
+            <h2>Rounds</h2>
+            <span class="rounds-count">2 rounds</span>
+        </div>
+        
+        <div class="round-tabs">
+            <div class="round-tab active">Round 1</div>
+            <div class="round-tab">Round 2</div>
+        </div>
+        
+        <div class="round-card">
+            <div class="round-header">
+                <h3>Round 1 - September 28, 2026</h3>
+            </div>
+            
+            <div class="round-scores">
+                <div class="score-card win">
+                    <h4>Team A</h4>
+                    <div class="score">12</div>
+                </div>
+                <div class="score-card draw">
+                    <h4>Draw</h4>
+                    <div class="score">0</div>
+                </div>
+                <div class="score-card loss">
+                    <h4>Team B</h4>
+                    <div class="score">11</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <div>
+                    <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">Team A - 12 Actions</h4>
+                    <div style="font-size: 12px; color: #6c757d;">
+                        Mario: 5 actions (3 goals, 2 assists)<br>
+                        Luca: 4 actions (3 goals, 1 assist)<br>
+                        Giulia: 3 actions (2 goals, 1 assist)
+                    </div>
+                </div>
+                <div>
+                    <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">Team B - 11 Actions</h4>
+                    <div style="font-size: 12px; color: #6c757d;">
+                        Sara: 6 actions (4 goals, 2 assists)<br>
+                        Marco: 3 actions (1 goal, 2 assists)<br>
+                        Elena: 2 actions (1 goal, 1 assist)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="stats-section">
+        <div class="stat-card">
+            <h4>Total Actions</h4>
+            <div class="value">23</div>
+        </div>
+        <div class="stat-card">
+            <h4>Team A Actions</h4>
+            <div class="value">12</div>
+        </div>
+        <div class="stat-card">
+            <h4>Team B Actions</h4>
+            <div class="value">11</div>
+        </div>
+        <div class="stat-card">
+            <h4>Unattributed</h4>
+            <div class="value">0</div>
+        </div>
+    </div>
+    
+    <div class="participation-section">
+        <h2>Participation History</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Session</th>
+                        <th>Team</th>
+                        <th>Actions</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>September 21, 2026</td>
+                        <td>Matchday 4</td>
+                        <td>Team A</td>
+                        <td>8</td>
+                        <td style="color: var(--success);">Attended</td>
+                    </tr>
+                    <tr>
+                        <td>September 14, 2026</td>
+                        <td>Matchday 3</td>
+                        <td>Team B</td>
+                        <td>5</td>
+                        <td style="color: var(--success);">Attended</td>
+                    </tr>
+                    <tr>
+                        <td>September 7, 2026</td>
+                        <td>Matchday 2</td>
+                        <td>Team A</td>
+                        <td>10</td>
+                        <td style="color: var(--success);">Attended</td>
+                    </tr>
+                    <tr>
+                        <td>August 31, 2026</td>
+                        <td>Matchday 1</td>
+                        <td>Team A</td>
+                        <td>6</td>
+                        <td style="color: var(--success);">Attended</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="actions-section">
+        <h2>Actions</h2>
+        <div class="action-buttons">
+            <button class="btn btn-primary">Edit Session</button>
+            <button class="btn btn-primary">Add Round</button>
+            <button class="btn btn-secondary">Export Report</button>
+            <button class="btn btn-secondary">View Photos</button>
+            <button class="btn btn-danger">Delete Session</button>
+        </div>
+    </div>
+</body>
+</html>

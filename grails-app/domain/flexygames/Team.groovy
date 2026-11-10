@@ -196,7 +196,9 @@ class Team implements Comparable {
 
 	int compareTo(Object o) {
 		if (o instanceof Team) {
-			return name.compareTo(o.name)
+			String thisName = this.name ?: ''
+			String otherName = o.name ?: ''
+			return thisName.compareTo(otherName)
 		} else {
 			return -1
 		}

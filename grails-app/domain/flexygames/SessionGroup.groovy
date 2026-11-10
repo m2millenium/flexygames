@@ -90,8 +90,8 @@ class SessionGroup implements Comparable<SessionGroup> {
 		if (SecurityUtils.subject.hasRole("Administrator")) {
 			return true
 		}
-		def managed = false
-		this.defaultTeams.each { team ->
+				def managed = false
+				(this.defaultTeams ?: []).each { team ->
 			if (team.managers.contains(user)) {
 				managed = true
 			}
@@ -116,10 +116,14 @@ class SessionGroup implements Comparable<SessionGroup> {
 	}
 
 	public int compareTo (SessionGroup o) {
-		if (defaultTeams.size() > 0 && o.defaultTeams.size() > 0) {
-			int i = defaultTeams.first().compareTo(o.defaultTeams.first())
+		def thisDefaultTeams = this.defaultTeams ?: []
+		def otherDefaultTeams = o.defaultTeams ?: []
+		if (thisDefaultTeams.size() > 0 && otherDefaultTeams.size() > 0) {
+			int i = thisDefaultTeams.first().compareTo(otherDefaultTeams.first())
 			if (i != 0) return i
 		}
-		return name.compareTo(o.name)
+		String thisName = this.name ?: ''
+		String otherName = o.name ?: ''
+		return thisName.compareTo(otherName)
 	}
 }

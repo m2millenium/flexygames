@@ -14,7 +14,7 @@ class Vote implements Comparable<Vote> {
 		if (i != 0) return i
 		i = this.player.compareTo(o.player)
 		if (i != 0) return i
-		i = o.score.compareTo(o.score)
+				i = this.score.compareTo(o.score)
 		if (i != 0) return i
 		return this.user.compareTo(o.user)
 	}

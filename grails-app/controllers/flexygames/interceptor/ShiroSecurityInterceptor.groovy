@@ -28,7 +28,7 @@ class ShiroSecurityInterceptor {
         }
 
         // turman : no access control for some controllers.
-        if (controllerName in ['auth', 'player', 'playgrounds', 'site', 'stats', 'teams', 'assets', 'fileUpload']) {
+        if (controllerName in ['auth', 'player', 'playgrounds', 'site', 'stats', 'teams', 'assets', 'fileUpload', 'myself']) {
             return true
         }
 
@@ -54,6 +54,12 @@ class ShiroSecurityInterceptor {
             return false
         }
         true
+    }
+
+    boolean accessControl() {
+        // Check if user has Administrator role
+        def subject = SecurityUtils.getSubject()
+        subject.isAuthenticated() && subject.hasRole("Administrator")
     }
 
     boolean after() {

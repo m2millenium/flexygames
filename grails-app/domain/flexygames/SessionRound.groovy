@@ -41,8 +41,8 @@ class SessionRound /*implements Comparable<SessionRound> */{
 
 	
 	def getActionsByTeam(teamA) {
+		def actions = GameAction.where { sessionRound == sessionRound }.list()
 		def result = []
-		// add attribued actions
 		def players = teamA ? playersForTeamA : playersForTeamB
 		actions.each{ action -> 
 			if (action.mainContributor != null && players.contains(action.mainContributor)) result << action 

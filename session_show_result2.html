@@ -1,0 +1,1905 @@
+<!doctype html>
+
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
+
+	<head>
+		<title>FlexyGames</title>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<meta name="viewport" content="width=1280, initial-scale=1.0"/>
+		
+		<!--  Avoid HTTP caching from clients (and proxies) -->
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+
+		<link rel="shortcut icon" type="image/png" href="/assets/flexygames-icon-32x32.png"/>
+		<link rel="shortcut icon" href="/assets/flexygames-icon-32x32.png" type="image/png" />
+		<link rel="apple-touch-icon" href="/assets/flexygames-icon-32x32.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/assets/flexygames-icon-114x114.png" />
+
+		<link rel="stylesheet" href="/css/main-20160208.css" />
+		<link rel="stylesheet" href="/css/mobile-20160208.css" />
+		<link rel="stylesheet" href="/css/flexygames-v6.css" />
+    <link rel="stylesheet" href="/css/flexygames-modern-v2.css" />
+
+		<!--g:javascript library="application"/-->
+		<!--g:javascript library="flexygames" /-->
+		<script type="text/javascript" src="/assets/application.js"></script>
+		<script type="text/javascript" src="/js/flexygames-20160508.js"></script>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <!--r:layoutResources /-->
+
+		
+
+		
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="layout" content="desktop"/>
+	<script type="text/javascript">
+
+</script>
+
+	<script src="/js/interact-1.2.4.min.js" type="text/javascript"></script>
+
+	</head>
+	
+	<body onload="; ">
+		<div id="mainPage">
+			<div id="mainTop">
+				<a href="/home">
+				  <img src="/images/flexygames-header-766x80.png" alt="Grails" border="0" />
+				</a>
+			</div>
+			<div id="mainNav">
+				<div class="block">
+					<h3 style="margin-top: 0.2em">Main menu</h3>
+					<ul>
+						<li><a href="/home">Homepage</a></li>
+						<li><a href="/teams/list">Teams</a></li>
+						<li><a href="/sessions/list">Sessions</a></li>
+						<li><a href="/player/list">Players</a></li>
+						<li><a href="/playgrounds/list">Playgrounds</a></li>
+						<li><a href="/site/stats">Statistics</a></li>
+						<li><a href="/site/tutorial">Tutorial</a></li>
+						<li><a href="/about">About</a></li>
+						<li><a href="/site/contact">Contact</a></li>
+					</ul>
+				</div>
+				<div class="block">
+	
+	
+		<h3 style="margin-top: 0.2em">
+			Authentification
+		</h3>
+		<form action="/auth/signIn" method="post" style="margin: 0px;" >
+			<table style="border: 0px; margin: 0px; padding: 0px">
+				<tr>
+					<td style="font-size: 12px; vertical-align: middle; padding-left: 5px">
+						Login</td>
+					<td><input size="8" type='text' name='username' />
+					<br></td>
+				</tr>
+				<tr>
+					<td style="font-size: 12px; vertical-align: middle; padding-left: 5px">
+						Password
+					</td>
+					<td>
+						<input size="8" type='password' name='password' />
+					</td>
+				</tr>
+		        <tr>
+		          <td colspan="2" style="font-size: 12px; vertical-align: middle">
+		          	Remember me ?
+		          	<input type="hidden" name="_rememberMe" /><input type="checkbox" name="rememberMe" id="rememberMe"  />
+		          </td>
+		        </tr>
+				<tr>
+					<td colspan="2" style="text-align: center;">
+						<input type="submit" name="submitButton" value=" Login " style="margin-top: 0px; margin-bottom: 0px;" />
+						<br>
+						<br>
+						<a href="/player/remindPassword" style="font-size: 12px">
+							Forgotten password ?
+						</a>
+						<br>
+						<a href="/player/register" style="font-size: 12px">
+							Create account
+						</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	
+</div>
+
+
+				<br />
+				<div class="block">
+					<h3 style="margin-top: 0.2em">Who's online ?</h3>
+					
+					
+						There isn't any connected player now
+					
+				</div>
+				<br /> <br />
+				
+			</div>
+			<div id=mainBody>
+				<a href="#top"></a>
+				
+	<table style="width: 100%">
+    <tr>
+        <td style="text-align: left; vertical-align: middle">
+            
+                <a href="/sessions/show/7">&lt;&lt; Previous session</a>
+            
+        </td>
+        <td style="text-align: center; vertical-align: middle">
+            
+                <h1 style="margin: 0px">Session #102 - 2026-08-21</h1>
+            
+        </td>
+        <td style="text-align: right; vertical-align: middle">
+            
+                Next session &gt;&gt;
+            
+        </td>
+    </tr>
+</table>
+
+    
+	
+	
+
+	
+	
+	<div class="sessionZone">
+	<div class="sessionZoneHeader" onclick="toggleDisplay('infosSummaryZone'); toggleDisplay('infosDetailedZone'); return false">
+		<h2 style="vertical-align: top; display: inline;">
+			Informations
+		</h2>
+		<span style="float:right; font-size: small;">Click to show/hide details</span>
+	</div>
+	<div class="sessionZoneContent">
+		
+		
+		<div id="infosSummaryZone" style="display: none;">
+		</div>
+		<div id="infosDetailedZone" style="display: block; border: 0px; width: 100%;">
+			<table style="border: 0px; width: 100%; margin-bottom: 0px;">
+				<tr>
+					<td style="min-width: 400px; width: 40%">
+						<table style="width: auto;">
+							
+							
+							<tr>
+								<td style="vertical-align: top; " >Date and hours</td>
+								<td style="vertical-align: top; " >
+									<b>venerdì 21 agosto 2026</b>
+									<ul>
+										<li>
+											Session lock: <b>18:55</b>
+											<div style="font-size: x-small; color: red" class="tooltip">
+												What is it?
+												<span class="tooltiptext">After the lock date it is no longer possible to set its status to DECLINED if a manager have accepted you. The goal is to prevent last-minute cancellation and thus make life easier for managers.</span>
+											</div>
+										</li>
+										<li>Appointment: <b>18:40</b></li>
+										<li>Session start: <b>18:55</b></li>
+										<li>Session end: <b>20:25</b></li>
+									</ul>
+
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top; " >Playground</td>
+								<td style="vertical-align: top; " >
+									<b>Lycée Turgot</b>
+									<br>
+									France
+									<br>
+									<a href="/playgrounds/show/3">View playground stats and place it on the map</a>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top; " >Manager(s)</td>
+								<td style="vertical-align: top; " >
+									
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td style="text-align: center; vertical-align: top;">
+						
+						<h3 style="margin-top: 0px">Related team(s)</h3>
+						<a href="/teams/show/3">
+							
+								<img style="max-width: 200px; max-height:120px;" src="/images/team/no-logo.png" alt="Team logo" />
+							<br />
+							<!--Team Luca-->
+						</a>
+						<br />
+						<br />
+						Session group:
+						
+						
+						<a href="/teams/show/3?mode=training&amp;group=3">
+							Volleyball d&#39;ASAS
+						</a>
+					</td>
+					<td style="text-align: left; vertical-align: top;">
+						<h3 style="margin-top: 0px">Forecast</h3>
+						<div style="text-align: left">
+							<!--iframe src="/sessions/forecast/2" id="forecastFrame" style="border: 0px;" ></iframe-->
+							<!--div id="forecastDiv"></div>
+							<script style="javascript">
+								$.get( "/sessions/forecast/2", function( data ) {
+									$("#forecastDiv").html(data)
+								});
+							</script-->
+							
+
+
+    Information not available
+
+
+						</div>
+					</td>
+					
+				</tr>
+			</table>
+			
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+	<div class="sessionZone">
+    <div class="sessionZoneHeader" onclick="toggleDisplay('tasksSummaryZone'); toggleTableDisplay('tasksDetailedZone'); return false">
+        <h2 style="vertical-align: top; display: inline;">
+            Tasks
+        </h2>
+        <span style="float:right; font-size: small;">Click to show/hide details</span>
+    </div>
+    
+    
+    
+        
+        
+    
+    <div class="sessionZoneContent">
+        <div id="tasksSummaryZone" style="display: none;">
+            
+                There's no task defined for now..
+            
+        </div>
+        
+        
+        <table id="tasksDetailedZone" style="display: table; border: none; margin: 0px">
+            
+                <tr>
+                    <td>
+                        <i>There's no task defined for now..</i>
+                        <br />
+                    </td>
+                </tr>
+            
+            
+            <tr>
+                <td style="background-color: #d8f3f0">
+                    <form action="/sessions/addTask/2" method="post" name="taskForm" id="taskForm" >
+                        I can help for the following task:
+                        <select name="newTaskCode" id="newTaskCode" >
+</select>
+                        <input type="submit" name="newTask" value="OK" id="newTask" />
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+	<div class="sessionZone">
+    <div class="sessionZoneHeader" onclick="toggleTableDisplay('participantsSummaryZone');
+    toggleTableDisplay('participantsDetailedZone');
+    return false">
+        <h2 style="vertical-align: top; display: inline;">
+            Participants
+        </h2>
+        <span style="float:right; font-size: small;">Click to show/hide details</span>
+    </div>
+
+    
+
+    <div class="sessionZoneContent">
+        
+        
+        <table class="fuckCSS" id="participantsSummaryZone"
+               style="display: none; width: 100%; ">
+            <tr>
+                <td colspan="6" style="text-align: center; width: 100%; ">
+                    
+                        You are not a participant of this session.
+                        <form action="/sessions/join" method="post" >
+                            <input type="hidden" name="id" value="2" id="id" />
+                            <input type="submit" name="_action_join" value="Join session" class="create" onclick="return confirm(&#39;Are you sure to be available for that session ?&#39;);" />
+                        </form>
+                    
+                </td>
+            </tr>
+            
+			        <tr style="width: 100%;">
+			            
+			            
+			                
+			            
+			            <th colspan="4" style="text-align: left; vertical-align: top; ">
+			            	<span style="font-size: 18px ; color: #3c3;">
+			            		Total of available players : <b>9 / 9</b>
+			            	</span>
+			            	
+			            	
+			            </th>
+			            <th colspan="2" style="text-align: right; vertical-align: top; ">
+			                 [
+			                 Minimum: 8,
+			                 Preferred: 10,
+			                 Maximum: 12
+			                 ]
+			            </th>
+			        </tr>
+        </table>
+        <table id="participantsDetailedZone"
+               style="border: 0px; display: table; width: 100%">
+            <tr>
+                <td>
+                    
+                    
+                                <table class="flexyTab">
+                <thead>
+                <tr>
+                    
+                    <th style="vertical-align: top; text-align: center;" colspan="2">Player</th>
+                    <th style="vertical-align: top;">&nbsp;</th>
+                    <th style="vertical-align: top;">Teams</th>
+                    <th style="vertical-align: top; text-align: center;">Status</th>
+                    <th style="vertical-align: top; min-width: 200px;">Log</th>
+                </tr>
+                </thead>
+                <tbody>
+                
+                    <script type="text/javascript">
+var pendingParticipationIds = [];
+</script>
+
+                    
+                        
+                        
+                        <tr id="participation-17" class="odd" style="display: table-row; border: solid grey 1px">
+                            
+                            <td style="text-align: center; height: 50px; padding-left: 0px">
+                                
+		<a href="/player/show/1">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="mario" />
+		</a>
+                            </td>
+                            <td style="text-align: left; padding-left: 0px; border: solid grey 0px">
+                                <a href="/player/show/1">
+                                    mario
+                                </a>
+                                <br/>
+                                <nobr>
+                                    
+                                        <span style="font-size: 10px; color: red">Fees not up to date</span>
+                                    
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="font-size: 10px;">Received points: <b></b></span>
+                                </nobr>
+                            </td>
+                            <td style="font-size: 10px; border: solid grey 0px">
+                                
+                                <nobr>
+                                    <span style="font-size: 12px;">
+                                        
+                                        <b></b>
+                                        participation
+                                    </span>
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="color: #FF0000">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #cecc4e">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #FE6F0F">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #63B6FF">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                            </td>
+                            
+                            <td style="font-size: 10px; line-height: 10px; border: solid grey 1px">
+                                
+                                    <a href="/teams/show/1">Team Mario</a><br/>
+                                
+                            </td>
+                            
+                            <!-- Load the participation only if required -->
+
+
+    <td style="text-align: center; vertical-align: middle; border: solid black 1px; background-color: #06F6F9; ">
+        <form action="/sessions/update" method="get" name="participationStatusForm17" id="participationStatusForm17" >
+            <input type="hidden" name="id" value="17" id="id" />
+            <input type="hidden" name="userLog" value="" id="userLog" />
+            
+            <!-- Check if session is managed by current user only if required -->
+            
+                
+            
+            
+                <b>Available</b>
+            
+        </form>
+    </td>
+
+                            <td style="background-color: #06F6F9; font-size: 12px; border: solid black 1px">
+                                
+                                    Last update
+                                    <b> a month ago</b>
+                                    by mario
+                                    : <span style="font-size: 12px"><i>Participation created on 2026-09-27 18:55:08</i></span>
+                                
+                            </td>
+                        </tr>
+                    
+                        
+                        
+                        <tr id="participation-10" class="even" style="display: table-row; border: solid grey 1px">
+                            
+                            <td style="text-align: center; height: 50px; padding-left: 0px">
+                                
+		<a href="/player/show/15">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="jack" />
+		</a>
+                            </td>
+                            <td style="text-align: left; padding-left: 0px; border: solid grey 0px">
+                                <a href="/player/show/15">
+                                    jack
+                                </a>
+                                <br/>
+                                <nobr>
+                                    
+                                        <span style="font-size: 10px; color: red">Fees not up to date</span>
+                                    
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="font-size: 10px;">Received points: <b></b></span>
+                                </nobr>
+                            </td>
+                            <td style="font-size: 10px; border: solid grey 0px">
+                                
+                                <nobr>
+                                    <span style="font-size: 12px;">
+                                        
+                                        <b></b>
+                                        participation
+                                    </span>
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="color: #FF0000">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #cecc4e">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #FE6F0F">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #63B6FF">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                            </td>
+                            
+                            <td style="font-size: 10px; line-height: 10px; border: solid grey 1px">
+                                
+                                    <a href="/teams/show/5">Team Sofia</a><br/>
+                                
+                            </td>
+                            
+                            <!-- Load the participation only if required -->
+
+
+    <td style="text-align: center; vertical-align: middle; border: solid black 1px; background-color: #FE6F0F; ">
+        <form action="/sessions/update" method="get" name="participationStatusForm10" id="participationStatusForm10" >
+            <input type="hidden" name="id" value="10" id="id" />
+            <input type="hidden" name="userLog" value="" id="userLog" />
+            
+            <!-- Check if session is managed by current user only if required -->
+            
+                
+            
+            
+                <b>Gate Crasher</b>
+            
+        </form>
+    </td>
+
+                            <td style="background-color: #FE6F0F; font-size: 12px; border: solid black 1px">
+                                
+                                    Last update
+                                    <b> a month ago</b>
+                                    by jack
+                                    : <span style="font-size: 12px"><i>Participation created on 2026-09-27 18:55:08</i></span>
+                                
+                            </td>
+                        </tr>
+                    
+                        
+                        
+                        <tr id="participation-12" class="odd" style="display: table-row; border: solid grey 1px">
+                            
+                            <td style="text-align: center; height: 50px; padding-left: 0px">
+                                
+		<a href="/player/show/10">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="anna" />
+		</a>
+                            </td>
+                            <td style="text-align: left; padding-left: 0px; border: solid grey 0px">
+                                <a href="/player/show/10">
+                                    anna
+                                </a>
+                                <br/>
+                                <nobr>
+                                    
+                                        <span style="font-size: 10px; color: red">Fees not up to date</span>
+                                    
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="font-size: 10px;">Received points: <b></b></span>
+                                </nobr>
+                            </td>
+                            <td style="font-size: 10px; border: solid grey 0px">
+                                
+                                <nobr>
+                                    <span style="font-size: 12px;">
+                                        
+                                        <b></b>
+                                        participation
+                                    </span>
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="color: #FF0000">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #cecc4e">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #FE6F0F">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #63B6FF">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                            </td>
+                            
+                            <td style="font-size: 10px; line-height: 10px; border: solid grey 1px">
+                                
+                                    <a href="/teams/show/5">Team Sofia</a><br/>
+                                
+                            </td>
+                            
+                            <!-- Load the participation only if required -->
+
+
+    <td style="text-align: center; vertical-align: middle; border: solid black 1px; background-color: #229f37; ">
+        <form action="/sessions/update" method="get" name="participationStatusForm12" id="participationStatusForm12" >
+            <input type="hidden" name="id" value="12" id="id" />
+            <input type="hidden" name="userLog" value="" id="userLog" />
+            
+            <!-- Check if session is managed by current user only if required -->
+            
+                
+            
+            
+                <b>Present</b>
+            
+        </form>
+    </td>
+
+                            <td style="background-color: #229f37; font-size: 12px; border: solid black 1px">
+                                
+                                    Last update
+                                    <b> a month ago</b>
+                                    by anna
+                                    : <span style="font-size: 12px"><i>Participation created on 2026-09-27 18:55:08</i></span>
+                                
+                            </td>
+                        </tr>
+                    
+                        
+                        
+                        <tr id="participation-15" class="even" style="display: table-row; border: solid grey 1px">
+                            
+                            <td style="text-align: center; height: 50px; padding-left: 0px">
+                                
+		<a href="/player/show/2">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="giulia" />
+		</a>
+                            </td>
+                            <td style="text-align: left; padding-left: 0px; border: solid grey 0px">
+                                <a href="/player/show/2">
+                                    giulia
+                                </a>
+                                <br/>
+                                <nobr>
+                                    
+                                        <span style="font-size: 10px; color: red">Fees not up to date</span>
+                                    
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="font-size: 10px;">Received points: <b></b></span>
+                                </nobr>
+                            </td>
+                            <td style="font-size: 10px; border: solid grey 0px">
+                                
+                                <nobr>
+                                    <span style="font-size: 12px;">
+                                        
+                                        <b></b>
+                                        participation
+                                    </span>
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="color: #FF0000">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #cecc4e">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #FE6F0F">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #63B6FF">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                            </td>
+                            
+                            <td style="font-size: 10px; line-height: 10px; border: solid grey 1px">
+                                
+                                    <a href="/teams/show/2">Team Giulla</a><br/>
+                                
+                            </td>
+                            
+                            <!-- Load the participation only if required -->
+
+
+    <td style="text-align: center; vertical-align: middle; border: solid black 1px; background-color: #229f37; ">
+        <form action="/sessions/update" method="get" name="participationStatusForm15" id="participationStatusForm15" >
+            <input type="hidden" name="id" value="15" id="id" />
+            <input type="hidden" name="userLog" value="" id="userLog" />
+            
+            <!-- Check if session is managed by current user only if required -->
+            
+                
+            
+            
+                <b>Present</b>
+            
+        </form>
+    </td>
+
+                            <td style="background-color: #229f37; font-size: 12px; border: solid black 1px">
+                                
+                                    Last update
+                                    <b> a month ago</b>
+                                    by giulia
+                                    : <span style="font-size: 12px"><i>Participation created on 2026-09-27 18:55:08</i></span>
+                                
+                            </td>
+                        </tr>
+                    
+                        
+                        
+                        <tr id="participation-11" class="odd" style="display: table-row; border: solid grey 1px">
+                            
+                            <td style="text-align: center; height: 50px; padding-left: 0px">
+                                
+		<a href="/player/show/3">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="luca" />
+		</a>
+                            </td>
+                            <td style="text-align: left; padding-left: 0px; border: solid grey 0px">
+                                <a href="/player/show/3">
+                                    luca
+                                </a>
+                                <br/>
+                                <nobr>
+                                    
+                                        <span style="font-size: 10px; color: red">Fees not up to date</span>
+                                    
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="font-size: 10px;">Received points: <b></b></span>
+                                </nobr>
+                            </td>
+                            <td style="font-size: 10px; border: solid grey 0px">
+                                
+                                <nobr>
+                                    <span style="font-size: 12px;">
+                                        
+                                        <b></b>
+                                        participation
+                                    </span>
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="color: #FF0000">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #cecc4e">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #FE6F0F">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #63B6FF">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                            </td>
+                            
+                            <td style="font-size: 10px; line-height: 10px; border: solid grey 1px">
+                                
+                                    <a href="/teams/show/3">Team Luca</a><br/>
+                                
+                            </td>
+                            
+                            <!-- Load the participation only if required -->
+
+
+    <td style="text-align: center; vertical-align: middle; border: solid black 1px; background-color: #229f37; ">
+        <form action="/sessions/update" method="get" name="participationStatusForm11" id="participationStatusForm11" >
+            <input type="hidden" name="id" value="11" id="id" />
+            <input type="hidden" name="userLog" value="" id="userLog" />
+            
+            <!-- Check if session is managed by current user only if required -->
+            
+                
+            
+            
+                <b>Present</b>
+            
+        </form>
+    </td>
+
+                            <td style="background-color: #229f37; font-size: 12px; border: solid black 1px">
+                                
+                                    Last update
+                                    <b> a month ago</b>
+                                    by luca
+                                    : <span style="font-size: 12px"><i>Participation created on 2026-09-27 18:55:08</i></span>
+                                
+                            </td>
+                        </tr>
+                    
+                        
+                        
+                        <tr id="participation-13" class="even" style="display: table-row; border: solid grey 1px">
+                            
+                            <td style="text-align: center; height: 50px; padding-left: 0px">
+                                
+		<a href="/player/show/6">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="martina" />
+		</a>
+                            </td>
+                            <td style="text-align: left; padding-left: 0px; border: solid grey 0px">
+                                <a href="/player/show/6">
+                                    martina
+                                </a>
+                                <br/>
+                                <nobr>
+                                    
+                                        <span style="font-size: 10px; color: red">Fees not up to date</span>
+                                    
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="font-size: 10px;">Received points: <b></b></span>
+                                </nobr>
+                            </td>
+                            <td style="font-size: 10px; border: solid grey 0px">
+                                
+                                <nobr>
+                                    <span style="font-size: 12px;">
+                                        
+                                        <b></b>
+                                        participation
+                                    </span>
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="color: #FF0000">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #cecc4e">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #FE6F0F">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #63B6FF">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                            </td>
+                            
+                            <td style="font-size: 10px; line-height: 10px; border: solid grey 1px">
+                                
+                                    <a href="/teams/show/1">Team Mario</a><br/>
+                                
+                            </td>
+                            
+                            <!-- Load the participation only if required -->
+
+
+    <td style="text-align: center; vertical-align: middle; border: solid black 1px; background-color: #229f37; ">
+        <form action="/sessions/update" method="get" name="participationStatusForm13" id="participationStatusForm13" >
+            <input type="hidden" name="id" value="13" id="id" />
+            <input type="hidden" name="userLog" value="" id="userLog" />
+            
+            <!-- Check if session is managed by current user only if required -->
+            
+                
+            
+            
+                <b>Present</b>
+            
+        </form>
+    </td>
+
+                            <td style="background-color: #229f37; font-size: 12px; border: solid black 1px">
+                                
+                                    Last update
+                                    <b> a month ago</b>
+                                    by martina
+                                    : <span style="font-size: 12px"><i>Participation created on 2026-09-27 18:55:08</i></span>
+                                
+                            </td>
+                        </tr>
+                    
+                        
+                        
+                        <tr id="participation-9" class="odd" style="display: table-row; border: solid grey 1px">
+                            
+                            <td style="text-align: center; height: 50px; padding-left: 0px">
+                                
+		<a href="/player/show/7">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="matteo" />
+		</a>
+                            </td>
+                            <td style="text-align: left; padding-left: 0px; border: solid grey 0px">
+                                <a href="/player/show/7">
+                                    matteo
+                                </a>
+                                <br/>
+                                <nobr>
+                                    
+                                        <span style="font-size: 10px; color: red">Fees not up to date</span>
+                                    
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="font-size: 10px;">Received points: <b></b></span>
+                                </nobr>
+                            </td>
+                            <td style="font-size: 10px; border: solid grey 0px">
+                                
+                                <nobr>
+                                    <span style="font-size: 12px;">
+                                        
+                                        <b></b>
+                                        participation
+                                    </span>
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="color: #FF0000">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #cecc4e">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #FE6F0F">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #63B6FF">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                            </td>
+                            
+                            <td style="font-size: 10px; line-height: 10px; border: solid grey 1px">
+                                
+                                    <a href="/teams/show/2">Team Giulla</a><br/>
+                                
+                            </td>
+                            
+                            <!-- Load the participation only if required -->
+
+
+    <td style="text-align: center; vertical-align: middle; border: solid black 1px; background-color: #229f37; ">
+        <form action="/sessions/update" method="get" name="participationStatusForm9" id="participationStatusForm9" >
+            <input type="hidden" name="id" value="9" id="id" />
+            <input type="hidden" name="userLog" value="" id="userLog" />
+            
+            <!-- Check if session is managed by current user only if required -->
+            
+                
+            
+            
+                <b>Present</b>
+            
+        </form>
+    </td>
+
+                            <td style="background-color: #229f37; font-size: 12px; border: solid black 1px">
+                                
+                                    Last update
+                                    <b> a month ago</b>
+                                    by matteo
+                                    : <span style="font-size: 12px"><i>Participation created on 2026-09-27 18:55:08</i></span>
+                                
+                            </td>
+                        </tr>
+                    
+                        
+                        
+                        <tr id="participation-16" class="even" style="display: table-row; border: solid grey 1px">
+                            
+                            <td style="text-align: center; height: 50px; padding-left: 0px">
+                                
+		<a href="/player/show/12">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="sara" />
+		</a>
+                            </td>
+                            <td style="text-align: left; padding-left: 0px; border: solid grey 0px">
+                                <a href="/player/show/12">
+                                    sara
+                                </a>
+                                <br/>
+                                <nobr>
+                                    
+                                        <span style="font-size: 10px; color: red">Fees not up to date</span>
+                                    
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="font-size: 10px;">Received points: <b></b></span>
+                                </nobr>
+                            </td>
+                            <td style="font-size: 10px; border: solid grey 0px">
+                                
+                                <nobr>
+                                    <span style="font-size: 12px;">
+                                        
+                                        <b></b>
+                                        participation
+                                    </span>
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="color: #FF0000">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #cecc4e">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #FE6F0F">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #63B6FF">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                            </td>
+                            
+                            <td style="font-size: 10px; line-height: 10px; border: solid grey 1px">
+                                
+                                    <a href="/teams/show/2">Team Giulla</a><br/>
+                                
+                            </td>
+                            
+                            <!-- Load the participation only if required -->
+
+
+    <td style="text-align: center; vertical-align: middle; border: solid black 1px; background-color: #229f37; ">
+        <form action="/sessions/update" method="get" name="participationStatusForm16" id="participationStatusForm16" >
+            <input type="hidden" name="id" value="16" id="id" />
+            <input type="hidden" name="userLog" value="" id="userLog" />
+            
+            <!-- Check if session is managed by current user only if required -->
+            
+                
+            
+            
+                <b>Present</b>
+            
+        </form>
+    </td>
+
+                            <td style="background-color: #229f37; font-size: 12px; border: solid black 1px">
+                                
+                                    Last update
+                                    <b> a month ago</b>
+                                    by sara
+                                    : <span style="font-size: 12px"><i>Participation created on 2026-09-27 18:55:08</i></span>
+                                
+                            </td>
+                        </tr>
+                    
+                        
+                        
+                        <tr id="participation-14" class="odd" style="display: table-row; border: solid grey 1px">
+                            
+                            <td style="text-align: center; height: 50px; padding-left: 0px">
+                                
+		<a href="/player/show/13">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="tom" />
+		</a>
+                            </td>
+                            <td style="text-align: left; padding-left: 0px; border: solid grey 0px">
+                                <a href="/player/show/13">
+                                    tom
+                                </a>
+                                <br/>
+                                <nobr>
+                                    
+                                        <span style="font-size: 10px; color: red">Fees not up to date</span>
+                                    
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="font-size: 10px;">Received points: <b></b></span>
+                                </nobr>
+                            </td>
+                            <td style="font-size: 10px; border: solid grey 0px">
+                                
+                                <nobr>
+                                    <span style="font-size: 12px;">
+                                        
+                                        <b></b>
+                                        participation
+                                    </span>
+                                </nobr>
+                                <br/>
+                                <nobr>
+                                    <span style="color: #FF0000">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #cecc4e">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #FE6F0F">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                                <nobr>
+                                    <span style="color: #63B6FF">
+                                        
+                                        
+                                        
+                                        
+                                    </span>
+                                </nobr>
+                            </td>
+                            
+                            <td style="font-size: 10px; line-height: 10px; border: solid grey 1px">
+                                
+                                    <a href="/teams/show/3">Team Luca</a><br/>
+                                
+                            </td>
+                            
+                            <!-- Load the participation only if required -->
+
+
+    <td style="text-align: center; vertical-align: middle; border: solid black 1px; background-color: #c2bf01; ">
+        <form action="/sessions/update" method="get" name="participationStatusForm14" id="participationStatusForm14" >
+            <input type="hidden" name="id" value="14" id="id" />
+            <input type="hidden" name="userLog" value="" id="userLog" />
+            
+            <!-- Check if session is managed by current user only if required -->
+            
+                
+            
+            
+                <b>Late</b>
+            
+        </form>
+    </td>
+
+                            <td style="background-color: #c2bf01; font-size: 12px; border: solid black 1px">
+                                
+                                    Last update
+                                    <b> a month ago</b>
+                                    by tom
+                                    : <span style="font-size: 12px"><i>Participation created on 2026-09-27 18:55:08</i></span>
+                                
+                            </td>
+                        </tr>
+                    
+                
+                </tbody>
+                <thead>
+                    
+			        <tr style="width: 100%;">
+			            
+			            
+			                
+			            
+			            <th colspan="4" style="text-align: left; vertical-align: top; ">
+			            	<span style="font-size: 18px ; color: #3c3;">
+			            		Total of available players : <b>9 / 9</b>
+			            	</span>
+			            	
+			            	
+			            </th>
+			            <th colspan="2" style="text-align: right; vertical-align: top; ">
+			                 [
+			                 Minimum: 8,
+			                 Preferred: 10,
+			                 Maximum: 12
+			                 ]
+			            </th>
+			        </tr>
+                </thead>
+                
+                    <tbody>
+                        <tr>
+                            <td colspan="6" style="text-align: center">
+                                <form action="/sessions/join" method="post" >
+                                    <input type="hidden" name="id" value="2" id="id" />
+                                    <input type="submit" name="_action_join" value="Join session" class="create" onclick="return confirm(&#39;Are you sure to be available for that session ?&#39;);" />
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                
+            </table>
+
+                </td>
+                <td style="width: 100px;">
+                    <h3>Options</h3>
+                    <input type="hidden" name="_hidePendingPlayers" /><input type="checkbox" name="hidePendingPlayers" checked="checked" onclick="togglePendingParticipations(); return true; " id="hidePendingPlayers"  />
+                    Hide players who are in <i>pending</i> state (except myself).
+                    <br/>
+                    <br/>
+                    <h3>Legend</h3>
+                            <table style="border: solid black 1px;">
+            <tr>
+                <td style="background-color: #F3EEEE;">&nbsp;</td>
+                <td><a class="tooltip"><nobr>Pending</nobr><span>Le joueur a été invité à la session mais n'a pas encore indiqué sa disponibilité.</span>
+                </a></td>
+                <td rowspan="3"
+                    style="font-size:10px; line-height: 10px; vertical-align: middle; text-align: center; background-color: #ddeedd;">
+                    P<br/>L<br/>A<br/>Y<br/>E<br/>R<br/>S
+                </td>
+            </tr>
+            <tr>
+                <td style="background-color: #06F6F9;">&nbsp;</td>
+                <td><a class="tooltip"><nobr>Available</nobr><span>Le joueur est disponible, il s'engage à venir à la session (dans le cas où un manager l'accepte).</span>
+                </a></td>
+            </tr>
+            <tr style="border-bottom: solid black 1px">
+                <td style="background-color: #FF8497;">&nbsp;</td>
+                <td><a class="tooltip"><nobr>Declined</nobr><span>Le joueur décline l'invitation et prévient qu'il ne pourra pas venir.</span>
+                </a></td>
+            </tr>
+        </table>
+        <table style="border: solid black 1px;">
+            <tr>
+                <td style="background-color: #2dd048;">&nbsp;</td>
+                <td><a class="tooltip"><nobr>Approved</nobr><span>Un manager a accepté la participation du joueur qui sera alors tenu d'être présent à la session.</span>
+                </a></td>
+                <td rowspan="4"
+                    style="font-size:10px; line-height: 10px; vertical-align: middle; text-align: center; background-color: #ddeedd;">
+                    M<br/>A<br/>N<br/>A<br/>G<br/>I<br/>N<br/>G
+                </td>
+            </tr>
+            <tr>
+                <td style="background-color: #37ff58;">&nbsp;</td>
+                <td><a class="tooltip"><nobr>Approved (extra field)</nobr><span>participation.status.APPROVED_EXTRA.infos</span>
+                </a></td>
+            </tr>
+            <tr>
+                <td style="background-color: #63B6FF;">&nbsp;</td>
+                <td><a class="tooltip"><nobr>Waiting List</nobr><span>Un manager ne peut pas accepter la participation du joueur mais le garde en réserve en cas de désistement d'un joueur accepté.</span>
+                </a></td>
+            </tr>
+            <tr style="border-bottom: solid black 1px">
+                <td style="background-color: #E5A84E;">&nbsp;</td>
+                <td><a class="tooltip"><nobr>Removed</nobr><span>Un manager refuse la participation du joueur (parce qu'il y a trop de monde ou tout simplement parce qu'il ne l'aime pas ;p).</span>
+                </a></td>
+            </tr>
+        </table>
+        <table style="border: solid black 1px;">
+            <tr>
+                <td style="background-color: #229f37;">&nbsp;</td>
+                <td><a class="tooltip"><nobr>Present</nobr><span>Le joueur est venu à la session alors qu'il avait bien été accepté et en plus il était à l'heure.</span>
+                </a></td>
+                <td rowspan="4"
+                    style="font-size:10px; line-height: 10px; vertical-align: middle; text-align: center; background-color: #ddeedd; border-bottom: solid black 1px">
+                    R<br/>E<br/>P<br/>O<br/>R<br/>T<br/>I<br/>N<br/>G
+                </td>
+            </tr>
+            <tr>
+                <td style="background-color: #c2bf01;">&nbsp;</td>
+                <td><a class="tooltip"><nobr>Late</nobr><span>Le joueur est venu à la session alors qu'il avait bien été accepté mais il était en retard.</span>
+                </a></td>
+            </tr>
+            <tr>
+                <td style="background-color: #FE6F0F;">&nbsp;</td>
+                <td><a class="tooltip"><nobr>Gate Crasher</nobr><span>Le joueur est venu à la session alors qu'il n'avait pas été accepté.</span>
+                </a></td>
+            </tr>
+            <tr style="border-bottom: solid black 1px">
+                <td style="background-color: #FF0000;">&nbsp;</td>
+                <td><a class="tooltip"><nobr>Absent</nobr><span>Le jouer n'est pas venu à la session alors qu'il avait été accepté.</span>
+                </a></td>
+            </tr>
+        </table>
+
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
+
+	
+	<div class="sessionZone">
+	<div class="sessionZoneHeader" onclick="toggleDisplay('compositionsSummaryZone'); toggleDisplay('compositionsDetailedZone'); return false">
+		<h2 style="vertical-align: top; display: inline;">
+			Compositions
+		</h2>
+		<span style="float: right; font-size: small;">Click to show/hide details</span>
+	</div>
+	<div class="sessionZoneContent">
+		
+		
+		
+		<div id="compositionsSummaryZone" style="display: block;">
+			
+				There's no composition for now..
+			
+		</div>
+		<div id="compositionsDetailedZone" style="display: none; ">
+			
+				<br />
+				<i>There's no composition for now..</i>
+				<br />
+				<br />
+			
+			
+
+		</div>
+	</div>
+</div>
+
+	<div class="sessionZone">
+	
+	<div class="sessionZoneHeader" onclick="toggleDisplay('carpoolSummaryZone'); toggleDisplay('carpoolDetailedZone'); return false">
+		<h2 style="vertical-align: top; display: inline;">
+			Carpool
+		</h2>
+		<span style="float:right; font-size: small;">Click to show/hide details</span>
+	</div>
+	<div class="sessionZoneContent">
+		
+		
+		
+		<div id="carpoolSummaryZone" style="display: block;">
+			<table style="width: 100%; border: 0px; margin: 0px;" >
+				<tr>
+					<td style="width: 50%">
+						
+							There is no carpool proposals for now..
+						
+					</td>
+					<td style="width: 50%">
+						
+							There is no carpool requests for now..
+						
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="carpoolDetailedZone" style="display: none;">
+			<table style="width: 100%; border: 0px; margin: 0px;" >
+				<tr>
+					<td style="width: 50%">
+						
+							There is no carpool proposals for now..
+						
+					</td>
+					<td style="width: 50%">
+						
+							There is no carpool requests for now..
+						
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: left; border: solid darkgray 1px; width: auto; background-color: lightblue; text-align: center; padding: 10px">
+						
+							<p><b>You need to login if you want to propose a carpool.</b></p>
+						
+						
+					</td>
+					<td style="text-align: left; border: solid darkgray 1px; width: auto; background-color: lightsalmon; text-align: center; padding: 10px">
+						
+							<p><b>You need to login if you want to request a carpool.</b></p>
+						
+						
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+	
+<div class="sessionZone">
+	<div class="sessionZoneHeader" onclick="toggleDisplay('scorescheetSummaryZone'); toggleTableDisplay('scorescheetDetailedZone'); return false">
+		<h2 style="vertical-align: top; display: inline;">
+			Scoresheet
+		</h2>
+		<span style="float:right; font-size: small;">Click to show/hide details</span>
+	</div>
+	
+	
+	
+		
+		
+	
+	<div class="sessionZoneContent">
+		<div id="scorescheetSummaryZone" style="display: none;">
+			
+				Number of round(s) : <b>1</b>
+			
+		</div>
+		<table id="scorescheetDetailedZone" style="display: table; border: none; margin: 0px">
+			<tr>
+				
+				
+					
+						
+						
+						
+						<td style="text-align: center">
+							<h3>Round #1</h3>
+							<table>
+								<tr>
+									<th>Team&nbsp;A</th>
+									<th>Team&nbsp;B</th>
+								</tr>
+								<tr>
+									<td>
+										<ul>
+											
+										</ul></td>
+									<td>
+										<ul>
+											
+										</ul></td>
+								</tr>
+								
+								
+								
+								
+									<tr>
+										<th><div style="color: black">Total: 0</div>
+										</th>
+										<th><div style="color: black">Total: 0</div>
+										</th>
+									</tr>
+								
+								
+							</table>
+						</td>
+					
+				
+			</tr>
+			
+		</table>
+	</div>
+</div>
+
+
+
+
+    <div class="sessionZone">
+	<div class="sessionZoneHeader" onclick="toggleDisplay('votesSummaryZone'); toggleTableDisplay('votesDetailedZone'); return false">
+		<h2 style="vertical-align: top; display: inline;">
+			Votes
+		</h2>
+		<span style="float:right; font-size: small;">Click to show/hide details</span>
+	</div>
+	
+	
+	
+		
+		
+	
+	<div class="sessionZoneContent">
+		<a id="votingArea"></a>
+		
+		
+		<div id="votesSummaryZone" style="display: none;">
+			
+				There's no vote for now..
+			
+		</div>
+		<table id="votesDetailedZone" style="display: table;">
+			<tr>
+				<td colspan="5">
+					You can rate players by voting. The criterion is not necessarily sporting, you can give points to players who have had a <i>good spirit</i> or at the opposite take points away from those who have annoyed you :)
+				</td>
+			</tr>
+			<tr>
+				<th colspan="2" style="text-align: center; width: 40%">Men of the match</th>
+				<th colspan="2" style="text-align: center; width: 40%">Drag of the match</th>
+				<th colspan="1" style="text-align: center; width: 20%">Scores</th>
+			</tr>
+			<tr>
+			   
+		            <td colspan="4" style="text-align: center"><br><i>There's no vote for now..</i><br></td>
+		        
+				<td colspan="1" rowspan="5">
+					
+						Best rated
+						<table>
+							
+							
+								<tr>
+									<td>
+										<a href="/player/show/12">
+											
+		<a href="/player/show/12">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="sara" />
+		</a>
+										</a>
+									</td>
+									<td style="vertical-align: middle;">
+										<a href="/player/show/12">
+											sara
+										</a>
+									</td>
+									<td>0</td>
+								</tr>
+							
+								<tr>
+									<td>
+										<a href="/player/show/2">
+											
+		<a href="/player/show/2">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="giulia" />
+		</a>
+										</a>
+									</td>
+									<td style="vertical-align: middle;">
+										<a href="/player/show/2">
+											giulia
+										</a>
+									</td>
+									<td>0</td>
+								</tr>
+							
+								<tr>
+									<td>
+										<a href="/player/show/13">
+											
+		<a href="/player/show/13">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="tom" />
+		</a>
+										</a>
+									</td>
+									<td style="vertical-align: middle;">
+										<a href="/player/show/13">
+											tom
+										</a>
+									</td>
+									<td>0</td>
+								</tr>
+							
+						</table>
+						Worst rated
+						<table>
+							
+							
+							
+							
+								<tr>
+									<td>
+										<a href="/player/show/3">
+											
+		<a href="/player/show/3">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="luca" />
+		</a>
+										</a>
+									</td>
+									<td style="vertical-align: middle;">
+										<a href="/player/show/3">
+											luca
+										</a>
+									</td>
+									<td>0</td>
+								</tr>
+							
+								<tr>
+									<td>
+										<a href="/player/show/15">
+											
+		<a href="/player/show/15">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="jack" />
+		</a>
+										</a>
+									</td>
+									<td style="vertical-align: middle;">
+										<a href="/player/show/15">
+											jack
+										</a>
+									</td>
+									<td>0</td>
+								</tr>
+							
+								<tr>
+									<td>
+										<a href="/player/show/7">
+											
+		<a href="/player/show/7">
+			
+				
+				
+			
+			<img style="maxWidth: 40px; vertical-align: middle; max-width: 200px;  max-height: 40px;" src="/images/user" alt="User avatar" title="matteo" />
+		</a>
+										</a>
+									</td>
+									<td style="vertical-align: middle;">
+										<a href="/player/show/7">
+											matteo
+										</a>
+									</td>
+									<td>0</td>
+								</tr>
+							
+						</table>
+					
+				</td>
+			</tr>
+			
+			    
+			        <tr>
+			            <th colspan="4" style="text-align: center">You need to be authenticated in order to vote</th>
+			        </tr>
+			    
+			    
+		    
+		 </table>
+	</div>
+</div>
+
+
+
+	<div class="sessionZone">
+	<div class="sessionZoneHeader" onclick="toggleDisplay('commentsSummaryZone'); toggleDisplay('commentsDetailedZone'); return false">
+		<h2 style="vertical-align: top; display: inline;">
+			Comments
+		</h2>
+		<span style="float:right; font-size: small;">Click to show/hide details</span>
+	</div>
+	<div class="sessionZoneContent">
+		
+		<br />
+		
+			<p><b>You need to be authenticated in order to post</b></p>
+		
+		
+		<br />
+		
+		
+		
+		<div id="commentsSummaryZone" style="display: block;">
+			
+				There's no comments for now..
+			
+		</div>
+		<div id="commentsDetailedZone" style="display: none;">
+				
+					<i>There's no comments for now..</i><br />
+				
+		</div>
+	</div>
+</div>
+
+	
+		<br />
+	<br />
+	<hr>
+	<br />
+	<div style="text-align: center;">
+		[<a href="#top">Back to the top</a>]
+		[<a href="/home">Back to the homepage</a>]
+	</div>
+	
+
+
+				<br />
+				<hr>
+				<br />
+				<div id="poweredIcons" style="text-align: center;">
+    <a href="http://www.grails.org"><img style="border: 0" src="/images/powered/powered-by-grails.gif" alt="grails" /></a>
+    <a href="http://groovy.codehaus.org"><img style="border: 0" src="/images/powered/powered-by-groovy.jpg" alt="groovy" /></a>
+    <a href="http://tomcat.apache.org"><img style="border: 0" src="/images/powered/powered-by-tomcat.jpg" alt="tomcat" /></a>
+    <a href="http://www.debian.org"><img style="border: 0" src="/images/powered/powered-by-debian.jpg" alt="debian" /></a>
+</div>
+
+<hr>
+<div style="text-align: center">
+    <br>
+    
+        You are currently using the <b>desktop version</b> of the site but you may want to try the <a href="?flavour=mobile">mobile version</a>.
+    
+</div>
+
+
+
+			</div>
+			<div id="spinner" class="spinner" style="display:none;">Loading&hellip;</div>
+	        <!--r:layoutResources /-->
+		</div>
+	</body>
+	
+</html>

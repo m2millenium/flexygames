@@ -21,6 +21,8 @@ class CarpoolProposal implements Comparable<CarpoolProposal> {
     }
 
     int compareTo(CarpoolProposal o) {
-        return driver.username.compareTo(o.driver.username)
+        String thisUsername = this.driver?.username ?: ''
+        String otherUsername = o.driver?.username ?: ''
+        return thisUsername.compareTo(otherUsername)
     }
 }

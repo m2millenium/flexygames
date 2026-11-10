@@ -20,6 +20,8 @@ class CarpoolRequest implements Comparable<flexygames.CarpoolRequest>{
     }
 
     int compareTo(CarpoolRequest o) {
-        return enquirer.username.compareTo(o.enquirer.username)
+        String thisUsername = this.enquirer?.username ?: ''
+        String otherUsername = o.enquirer?.username ?: ''
+        return thisUsername.compareTo(otherUsername)
     }
 }

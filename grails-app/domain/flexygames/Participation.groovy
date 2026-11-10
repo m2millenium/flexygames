@@ -75,17 +75,18 @@ class Participation implements Comparable<Participation> {
 
 	List<SessionRound> getWins() {
 		def result = []
-		for (SessionRound round : session.rounds) {
+		def rounds = SessionRound.where { session == this.session }.list()
+		for (SessionRound round : rounds) {
 			def winningTeam
-			if (round.playersForTeamA.contains(player)) {
+			if (round.playersForTeamA.contains(this.player)) {
 				winningTeam = SessionRound.Result.WON_BY_TEAM_A
-			} else if (round.playersForTeamB.contains(player)) {
+			} else if (round.playersForTeamB.contains(this.player)) {
 				winningTeam = SessionRound.Result.WON_BY_TEAM_B
 			}
 			if (winningTeam) {
 				def r = round.getResult()
 				if (r == winningTeam) {
-					 result << round
+				 result << round
 				}
 			}
 		}
@@ -94,17 +95,18 @@ class Participation implements Comparable<Participation> {
 	
 	List<SessionRound> getDefeats() {
 		def result = []
-		for (SessionRound round : session.rounds) {
+		def rounds = SessionRound.where { session == this.session }.list()
+		for (SessionRound round : rounds) {
 			def winningTeam
-			if (round.playersForTeamA.contains(player)) {
+			if (round.playersForTeamA.contains(this.player)) {
 				winningTeam = SessionRound.Result.WON_BY_TEAM_B
-			} else if (round.playersForTeamB.contains(player)) {
+			} else if (round.playersForTeamB.contains(this.player)) {
 				winningTeam = SessionRound.Result.WON_BY_TEAM_A
 			}
 			if (winningTeam) {
 				def r = round.getResult()
 				if (r == winningTeam) {
-					 result << round
+				 result << round
 				}
 			}
 		}
@@ -113,11 +115,12 @@ class Participation implements Comparable<Participation> {
 	
 	List<SessionRound> getDraws() {
 		def result = []
-		for (SessionRound round : session.rounds) {
+		def rounds = SessionRound.where { session == this.session }.list()
+		for (SessionRound round : rounds) {
 			def r = round.getResult()
-			if (round.playersForTeamA.contains(player) || round.playersForTeamB.contains(player)) {
+			if (round.playersForTeamA.contains(this.player) || round.playersForTeamB.contains(this.player)) {
 				if (r == SessionRound.Result.DRAW) {
-					 result << round
+				 result << round
 				}
 			}
 		}
@@ -127,24 +130,24 @@ class Participation implements Comparable<Participation> {
 	// Score depending win/defeat (useless)
 	def getResultScore() {
 		int score = 0
-		for (SessionRound round : session.rounds) {
+		def rounds = SessionRound.where { session == this.session }.list()
+		for (SessionRound round : rounds) {
 			def winningTeam
-			if (round.playersForTeamA.contains(player)) {
+			if (round.playersForTeamA.contains(this.player)) {
 				winningTeam = SessionRound.Result.WON_BY_TEAM_A
-			} else if (round.playersForTeamB.contains(player)) {
+			} else if (round.playersForTeamB.contains(this.player)) {
 				winningTeam = SessionRound.Result.WON_BY_TEAM_B
 			}
 			if (winningTeam ) {
 				def r = round.getResult()
 				if (r == winningTeam) {
-					 score += 1
+				 score += 1
 				} /*else {
 					// gestion des matchs nuls
 					if (r == SessionRound.Result.DRAW) {
 						score += 1
 					}
-				}*/
-			}
+				}*/			}
 		}
 		return score
 	}
@@ -152,7 +155,8 @@ class Participation implements Comparable<Participation> {
 	// Score depending action number
 	def getActionScore() {
 		int score = 0
-		session.rounds.each{ round ->
+		def rounds = SessionRound.where { session == this.session }.list()
+		rounds.each{ round ->
 			def actions = GameAction.findAllBySessionRoundAndMainContributor(round, this.player)
 			actions.each{score++}
 		}
@@ -182,7 +186,7 @@ class Participation implements Comparable<Participation> {
 	
 	String toString() {
 		return "Participation of $player for $session"
-}
+	}
 
 	public boolean equals (Object o) {
 		if (o instanceof Participation) {
@@ -191,19 +195,20 @@ class Participation implements Comparable<Participation> {
 		return false
 	}
 
+
 	int compareTo(Participation o) {
 		int i = statusCode.compareTo(o.statusCode)
 		if (i != 0) {
 			return i
 		}
 		if (statusCode == Status.AVAILABLE.code()) {
-			i = lastUpdate.compareTo(o.lastUpdate)
+			i = (lastUpdate?.compareTo(o.lastUpdate) ?: 0)
 			if (i != 0) return i
 		}
-		i = player.compareTo(o.player)
+		i = (player?.compareTo(o.player) ?: 0)
 		if (i != 0) {
 			return i
 		}
-		return lastUpdate.compareTo(o.lastUpdate)
+		return (lastUpdate?.compareTo(o.lastUpdate) ?: 0)
 	}
 }

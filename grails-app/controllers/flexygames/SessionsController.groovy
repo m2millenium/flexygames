@@ -40,9 +40,9 @@ class SessionsController {
 		} else if (params.filteredSessionGroup) {
 			session.filteredSessionGroup = Integer.parseInt(params.filteredSessionGroup)
 			// If the user changes filtered session group we need to reset the team too
-			if (session.filteredSessionGroup > 0) {
+			if (session.filteredSessionGroup?.intValue() > 0) {
 				currentSessionGroup = SessionGroup.get(session.filteredSessionGroup)
-				session.filteredTeam = currentSessionGroup.getDefaultTeams().first().getId()
+				session.filteredTeam = currentSessionGroup?.defaultTeams?.first()?.getId() ?: 0
 			}
 		}
 
@@ -51,15 +51,15 @@ class SessionsController {
 		def sessionListSize = 0
 		def sessionGroups
 		//SessionGroupForSelectTag currentSessionGroupForSelectTag = new SessionGroupForSelectTag()
-		if (session.filteredSessionGroup > 0) {
+		if (session.filteredSessionGroup?.intValue() > 0) {
 			if (currentSessionGroup == null) currentSessionGroup = SessionGroup.get(session.filteredSessionGroup)
 			//currentSessionGroupForSelectTag = new SessionGroupForSelectTag(currentSessionGroup.id, currentSessionGroup.toString())
-			sessionGroups = currentSessionGroup.defaultTeams.first().sessionGroups
+			sessionGroups = currentSessionGroup?.defaultTeams?.first()?.sessionGroups
 			sessionList = Session.findAllByGroup(currentSessionGroup, [max: params.max, offset: params.offset])
 			sessionListSize = Session.countByGroup(currentSessionGroup)
-		} else if (session.filteredTeam > 0) {
-			sessionGroups = Team.get(session.filteredTeam).sessionGroups
-			if (sessionGroups.size() > 0) {
+		} else if (session.filteredTeam?.intValue() > 0) {
+			sessionGroups = Team.get(session.filteredTeam)?.sessionGroups
+			if (sessionGroups?.size() > 0) {
 				sessionList = Session.findAllByGroupInList(sessionGroups, [max: params.max, offset: params.offset])
 				sessionListSize = Session.countByGroupInList(sessionGroups)
 			}
@@ -87,9 +87,13 @@ class SessionsController {
 			// Since Participation.compareTo() is smart there is nothing special to do about sorting
 
 			// Prepare data about memberships of participants (for feesUpToDate)
-			Team defaultTeam = session.group.defaultTeams.first()
+			Team defaultTeam = session.group.defaultTeams?.first()
+			if (!defaultTeam) {
+				// Fallback if defaultTeams is null or empty - find any team in the session group
+				defaultTeam = session.group.defaultTeams?.iterator()?.hasNext() ? session.group.defaultTeams?.iterator()?.next() : null
+			}
 			// Fetch membership of all users of the session in one shot
-			def allMembershipsForCurrentSession = Membership.findAllByTeamAndUserInList(defaultTeam, allPlayers)
+			def allMembershipsForCurrentSession = defaultTeam ? Membership.findAllByTeamAndUserInList(defaultTeam, allPlayers) : []
 
 			allMembershipsForCurrentSession.each { membership ->
 				def player = allPlayers.find { it == membership.user }
@@ -238,7 +242,7 @@ class SessionsController {
 		}
 		try  {
 			sessionsService.join(request.currentUser, session)
-			flash.message = "${message(code: 'session.show.participants.join.success')}"
+		 flash.message = "${message(code: 'session.show.participants.join.success')}"
 		} catch (Exception e) {
 			flash.error = e.message
 			println flash.error

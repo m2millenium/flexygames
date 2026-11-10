@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat
 import java.util.regex.Matcher
 
 import org.apache.shiro.crypto.hash.Sha512Hash
+import org.springframework.web.multipart.MultipartHttpServletRequest
 
 class PlayerController {
 
@@ -18,6 +19,8 @@ class PlayerController {
 	def userStatsService
 
 	def calendarService
+
+	def databaseSeedingService
 	
 	def index() { redirect(action:"list") }
 
@@ -35,19 +38,6 @@ class PlayerController {
 			users = User.findAllByUsernameIlike(params.first + "%", params)
 			total = User.countByUsernameIlike(params.first + "%")
 		}
-//		if (params.sort == "firstName") {
-//			users = User.findAllByFirstNameIlike(params.first + "%", params)
-//			total = User.countByFirstNameIlike(params.first + "%")
-//		} else if (params.sort == "lastName") {
-//			users = User.findAllByLastNameIlike(params.first + "%", params)
-//			total = User.countByLastNameIlike(params.first + "%")
-//		} else if (params.sort == "company") {
-//			users = User.findAllByCompanyIlike(params.first + "%", params)
-//			total = User.countByCompanyIlike(params.first + "%")
-//		} else if (params.sort == "city") {
-//			users = User.findAllByCityIlike(params.first + "%", params)
-//			total = User.countByCityIlike(params.first + "%")
-//		} 
 		[playerInstanceList: users, playerInstanceTotal: total]
 	}
 
@@ -85,7 +75,6 @@ class PlayerController {
 				}
 				return render(view: 'statsForGroup', model: [playerInstance: player, group: group])
 			} else {
-				// Prepare all data for user statistics
 				def userStats = userStatsService.getUserStats(player)
 				return [userStats:userStats]
 			}
@@ -95,7 +84,7 @@ class PlayerController {
 	def register() {}
 
 	@Transactional
-	def save () {
+	def save() {
 		User user = new User(params)
 		User similarUser = User.findByUsernameIlike(params.username.toLowerCase())
 		if (similarUser) {
@@ -124,6 +113,8 @@ class PlayerController {
 		user.email = params.email.toLowerCase()
 		user.registrationDate = new Date()
 		user.avatarName = 'no-avatar.jpg'
+		user.avatarColor = generateAvatarColor(params.username)
+		user.avatarUrl = generateAvatarUrl(params.username, user.avatarColor)
 		user.addToRoles(Role.findByName("Player"))
 		if (team) {
 			Membership ms = new Membership(user: user, team: team, manager: false,
@@ -131,15 +122,14 @@ class PlayerController {
 					regularForCompetition: false)
 			user.addToMemberships(ms)
 		}
-		// Init counters to avoid null values
-		user.commentCounter = 0;
-		user.participationCounter = 0;
-		user.voteCounter = 0;
-		user.actionCounter = 0;
-		user.absenceCounter = 0;
-		user.delayCounter = 0;
-		user.gateCrashCounter = 0;
-		user.waitingListCounter = 0;
+		user.commentCounter = 0
+		user.participationCounter = 0
+		user.voteCounter = 0
+		user.actionCounter = 0
+		user.absenceCounter = 0
+		user.delayCounter = 0
+		user.gateCrashCounter = 0
+		user.waitingListCounter = 0
 		if (!user.save()) {
 			flash.message = "${message(code: 'register.failed')}"
 			return render(view: "register", model: [user: user])
@@ -167,11 +157,6 @@ class PlayerController {
 					grailsApplication.config.grails.serverURL + '/player/resetPassword?id=' + user.id +
 					'&token=' + user.passwordResetToken + '">link</a>.'
 		mailerService.mail(user.email, "Scatterbrain !!", body)
-//		sendMail {
-//			to user.email
-//			subject "[FlexyGames] Scatterbrain !!"
-//			html body
-//		}
 		flash.message = "${message(code: 'remindPassword.success')}"
 		redirect(controller:"site", action: "home")
 	}
@@ -201,19 +186,52 @@ class PlayerController {
 	}
 	
 	def cal() {
-		def player = User.get(params.id)
-		if (!player) {
-			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'player.label', default: 'Player'), params.id])}"
-			redirect(action: "list")
+			def player = User.get(params.id)
+			if (!player) {
+				flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'player.label', default: 'Player'), params.id])}"
+				redirect(action: "list")
+			}
+			if (player.calendarToken != params.token) {
+				flash.message = "Sorry, your calendar link is invalid.. are you trying to spy $player ? :)"
+				redirect(action: "show", id: player.id)
+			}
+			def calendar = calendarService.getPlayerCalendar(player)
+			response.addHeader("content-disposition", String.format("attachment;filename=%s", "FlexyCalendarFor"+player.username + ".ics"))
+			println new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " FlexyGames : Calendar generated for $player"
+			return calendar
 		}
-		if (player.calendarToken != params.token) {
-			flash.message = "Sorry, your calendar link is invalid.. are you trying to spy $player ? :)"
-			redirect(action: "show", id: player.id)
+
+	def seedDatabase() {
+		DeveloperDataSeeder.seed()
+		render "Developer data seeded successfully!"
+	}
+
+	/**
+	 * Generate avatar color based on username
+	 */
+	private static String generateAvatarColor(String username) {
+		def colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD', 
+		              '#D4A5A5', '#9B59B6', '#3498DB', '#E67E22', '#2ECC71']
+		int hash = username.hashCode()
+		return colors[Math.abs(hash) % colors.size()]
+	}
+	
+	/**
+	 * Generate avatar URL using DiceBear API
+	 */
+	private static String generateAvatarUrl(String username, String color) {
+		String initials = extractInitials(username)
+		return "https://api.dicebear.com/9.x/initials/svg?seed=" + username + "&name=" + initials + "&backgroundColor=" + color.replace('#', '')
+	}
+	
+	/**
+	 * Extract initials from username
+	 */
+	private static String extractInitials(String username) {
+		def parts = username.split(/[\.\\-_]/)
+		if (parts.size() >= 2) {
+			return "${parts[0][0]}${parts[-1][0]}".toUpperCase()
 		}
-		def calendar = calendarService.getPlayerCalendar(player)
-		// TODO mettre un bon filename dans la réponse
-		response.addHeader("content-disposition", String.format("attachment;filename=%s", "FlexyCalendarFor"+player.username + ".ics"))
-		println new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " FlexyGames : Calendar generated for $player"
-		return calendar
+		return username.substring(0, Math.min(2, username.length())).toUpperCase()
 	}
 }

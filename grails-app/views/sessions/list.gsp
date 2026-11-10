@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<g:render template="/common/layout" />
+	<meta name="layout" content="main" />
 	<g:set var="entityName" value="${message(code: 'session.label', default: 'Session')}" />
 </head>
 <body>

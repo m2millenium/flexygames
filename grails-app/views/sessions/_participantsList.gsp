@@ -118,7 +118,7 @@
                                 </g:each>
                             </td>
                             </g:if>
-                            <g:render template="/common/status" model="['part': p, 'allStatusesArePossible':sessionIsManagedByCurrentUser]"/>
+                            <g:render template="/common/status" model="['part': p, 'allStatusesArePossible':sessionIsManagedByCurrentUser, 'sessionInstance': sessionInstance]"/>
                             <td style="background-color: ${flexygames.Participation.Status.color(p.statusCode)}; font-size: 12px; border: solid black 1px">
                                 <g:if test="${p.lastUpdate}">
                                     <g:message code="session.show.participants.lastUpdate" args="[]"/>

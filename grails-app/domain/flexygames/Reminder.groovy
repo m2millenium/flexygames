@@ -16,7 +16,9 @@ class Reminder implements Comparable<Reminder> {
 	
 	int compareTo(Object o) {
 		if (o instanceof Reminder) {
-			return minutesBeforeSession.compareTo(o.minutesBeforeSession)
+			def thisVal = this.minutesBeforeSession ?: 0
+			def otherVal = o.minutesBeforeSession ?: 0
+			return thisVal.compareTo(otherVal)
 		} else {
 			return false
 		}

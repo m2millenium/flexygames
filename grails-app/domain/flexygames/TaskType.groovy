@@ -15,7 +15,9 @@ class TaskType implements Comparable<TaskType> {
 
     @Override
     int compareTo(TaskType o) {
-        return code.compareTo(o.code)
+        String thisCode = this.code ?: ''
+        String otherCode = o.code ?: ''
+        return thisCode.compareTo(otherCode)
     }
 
 }

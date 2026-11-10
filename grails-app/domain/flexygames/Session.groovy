@@ -272,7 +272,7 @@ class Session implements Comparable {
 			int i = o.getDate().compareTo(this.getDate())
 			if (i != 0) return i
 			else {
-				int j = this.getPlayground().compareTo(this.getPlayground())
+							int j = this.getPlayground().compareTo(o.getPlayground())
 				if (j != 0) return j
 				else {
 					return this.getId().compareTo(o.getId())

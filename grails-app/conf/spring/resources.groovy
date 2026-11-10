@@ -1,6 +1,5 @@
-import org.apache.shiro.authc.credential.Sha512CredentialsMatcher
+import flexygames.DeveloperDataSeeder
 
-// Place your Spring DSL code here
 beans = {
-	credentialMatcher(Sha512CredentialsMatcher) { storedCredentialsHexEncoded = true }
+    databaseSeeder(DeveloperDataSeeder)
 }

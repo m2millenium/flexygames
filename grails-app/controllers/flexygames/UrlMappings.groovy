@@ -24,39 +24,39 @@ class UrlMappings {
 		"404"(view:'/notFound')
 		
 		// turman : move all administration controller to the "admin" subdirectory
+
+		"/admin"(controller:"admin/admin")
 		
-//		"/admin"(controller:"admin/admin")
-//		
-//		"/comment"(controller:"admin/comment")
-//		
-//		"/gameAction"(controller:"admin/gameAction")
-//		
-//		"/gameSkill"(controller:"admin/gameSkill")
-//		
-//		"/gameType"(controller:"admin/gameType")
-//		
-//		"/membership"(controller:"admin/membership")
-//		
-//		"/participation"(controller:"admin/participation")
-//		
-//		"/playground"(controller:"admin/playground")
-//		
-//		"/reminder"(controller:"admin/reminder")
-//		
-//		"/role"(controller:"admin/role")
-//		
-//		"/session"(controller:"admin/session")
-//		
-//		"/sessionGroup"(controller:"admin/sessionGroup")
-//		
-//		"/sessionRound"(controller:"admin/sessionRound")
-//		
-//		"/subscription"(controller:"admin/subscription")
-//		
-//		"/team"(controller:"admin/team")
-//		
-//		"/user"(controller:"admin/user")
-//		
-//		"/vote"(controller:"admin/vote")
+		"/comment"(controller:"admin/comment")
+		
+		"/gameAction"(controller:"admin/gameAction")
+		
+		"/gameSkill"(controller:"admin/gameSkill")
+		
+		"/gameType"(controller:"admin/gameType")
+		
+		"/membership"(controller:"admin/membership")
+		
+		"/participation"(controller:"admin/participation")
+		
+		"/playground"(controller:"admin/playground")
+		
+		"/reminder"(controller:"admin/reminder")
+		
+		"/role"(controller:"admin/role")
+		
+		"/session"(controller:"admin/session")
+		
+		"/sessionGroup"(controller:"admin/sessionGroup")
+		
+		"/sessionRound"(controller:"admin/sessionRound")
+		
+		"/subscription"(controller:"admin/subscription")
+		
+		"/team"(controller:"admin/team")
+		
+		"/user"(controller:"admin/user")
+		
+		"/vote"(controller:"admin/vote")
 	}
 }

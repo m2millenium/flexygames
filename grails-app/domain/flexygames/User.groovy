@@ -24,6 +24,8 @@ class User implements Comparable<User>, HttpSessionBindingListener {
     Integer yearBirthDate
 	Date registrationDate
 	String avatarName
+	String avatarUrl
+	String avatarColor
 	String passwordResetToken
 	Date passwordResetExpiration
 	Date lastLogin
@@ -103,6 +105,8 @@ class User implements Comparable<User>, HttpSessionBindingListener {
         yearBirthDate(nullable: true, range:1950..2012)
         registrationDate(nullable: false)
 		avatarName(nullable: true, blank: false)
+        avatarUrl(nullable: true, blank: true)
+        avatarColor(nullable: true, blank: true)
         memberships(nullable: true)
         skills(nullable: true)
         participations(nullable: true)
@@ -456,7 +460,9 @@ class User implements Comparable<User>, HttpSessionBindingListener {
 	}
 	
     public int compareTo (User o) {
-		return this.getUsername().toLowerCase().compareTo(o.getUsername().toLowerCase())
+		def thisUsername = this.getUsername() ?: ''
+		def otherUsername = o.getUsername() ?: ''
+		return thisUsername.toLowerCase().compareTo(otherUsername.toLowerCase())
     }
 
     public String toString() {

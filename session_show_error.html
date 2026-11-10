@@ -1,0 +1,192 @@
+<!doctype html>
+
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
+
+	<head>
+		<title>Grails Runtime Exception</title>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<meta name="viewport" content="width=1280, initial-scale=1.0"/>
+		
+		<!--  Avoid HTTP caching from clients (and proxies) -->
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+
+		<link rel="shortcut icon" type="image/png" href="/assets/flexygames-icon-32x32.png"/>
+		<link rel="shortcut icon" href="/assets/flexygames-icon-32x32.png" type="image/png" />
+		<link rel="apple-touch-icon" href="/assets/flexygames-icon-32x32.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/assets/flexygames-icon-114x114.png" />
+
+		<link rel="stylesheet" href="/css/main-20160208.css" />
+		<link rel="stylesheet" href="/css/mobile-20160208.css" />
+		<link rel="stylesheet" href="/css/flexygames-v6.css" />
+    <link rel="stylesheet" href="/css/flexygames-modern-v2.css" />
+
+		<!--g:javascript library="application"/-->
+		<!--g:javascript library="flexygames" /-->
+		<script type="text/javascript" src="/assets/application.js"></script>
+		<script type="text/javascript" src="/js/flexygames-20160508.js"></script>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <!--r:layoutResources /-->
+
+		
+
+		
+	  
+	  
+    <meta name="layout" content="desktop"/>
+
+	  <!--meta name="layout" content="desktop" /-->
+	  <style type="text/css">
+	  		.message {
+	  			border: 1px solid black;
+	  			padding: 5px;
+	  			background-color:#E9E9E9;
+	  		}
+	  		.stack {
+	  			border: 1px solid black;
+	  			padding: 5px;
+	  			overflow:auto;
+	  			height: 300px;
+	  		}
+	  		.snippet {
+	  			padding: 5px;
+	  			background-color:white;
+	  			border:1px solid black;
+	  			margin:3px;
+	  			font-family:courier;
+	  		}
+	  </style>
+  
+	</head>
+	
+	<body onload="; ">
+		<div id="mainPage">
+			<div id="mainTop">
+				<a href="/home">
+				  <img src="/images/flexygames-header-766x80.png" alt="Grails" border="0" />
+				</a>
+			</div>
+			<div id="mainNav">
+				<div class="block">
+					<h3 style="margin-top: 0.2em">Main menu</h3>
+					<ul>
+						<li><a href="/home">Homepage</a></li>
+						<li><a href="/teams/list">Teams</a></li>
+						<li><a href="/sessions/list">Sessions</a></li>
+						<li><a href="/player/list">Players</a></li>
+						<li><a href="/playgrounds/list">Playgrounds</a></li>
+						<li><a href="/site/stats">Statistics</a></li>
+						<li><a href="/site/tutorial">Tutorial</a></li>
+						<li><a href="/about">About</a></li>
+						<li><a href="/site/contact">Contact</a></li>
+					</ul>
+				</div>
+				<div class="block">
+	
+	
+		<h3 style="margin-top: 0.2em">
+			Authentification
+		</h3>
+		<form action="/auth/signIn" method="post" style="margin: 0px;" >
+			<table style="border: 0px; margin: 0px; padding: 0px">
+				<tr>
+					<td style="font-size: 12px; vertical-align: middle; padding-left: 5px">
+						Login</td>
+					<td><input size="8" type='text' name='username' />
+					<br></td>
+				</tr>
+				<tr>
+					<td style="font-size: 12px; vertical-align: middle; padding-left: 5px">
+						Password
+					</td>
+					<td>
+						<input size="8" type='password' name='password' />
+					</td>
+				</tr>
+		        <tr>
+		          <td colspan="2" style="font-size: 12px; vertical-align: middle">
+		          	Remember me ?
+		          	<input type="hidden" name="_rememberMe" /><input type="checkbox" name="rememberMe" id="rememberMe"  />
+		          </td>
+		        </tr>
+				<tr>
+					<td colspan="2" style="text-align: center;">
+						<input type="submit" name="submitButton" value=" Login " style="margin-top: 0px; margin-bottom: 0px;" />
+						<br>
+						<br>
+						<a href="/player/remindPassword" style="font-size: 12px">
+							Forgotten password ?
+						</a>
+						<br>
+						<a href="/player/register" style="font-size: 12px">
+							Create account
+						</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	
+</div>
+
+
+				<br />
+				<div class="block">
+					<h3 style="margin-top: 0.2em">Who's online ?</h3>
+					
+					
+						There isn't any connected player now
+					
+				</div>
+				<br /> <br />
+				
+			</div>
+			<div id=mainBody>
+				<a href="#top"></a>
+				
+    <h1>Grails Runtime Exception</h1>
+    <h2>Error Details</h2>
+
+  	<div class="message">
+		<strong>Error 500:</strong> <br/>
+		<strong>Servlet:</strong> grailsDispatcherServlet<br/>
+		<strong>URI:</strong> /sessions/show/2<br/>
+		
+  	</div>
+	
+  
+				<br />
+				<hr>
+				<br />
+				<div id="poweredIcons" style="text-align: center;">
+    <a href="http://www.grails.org"><img style="border: 0" src="/images/powered/powered-by-grails.gif" alt="grails" /></a>
+    <a href="http://groovy.codehaus.org"><img style="border: 0" src="/images/powered/powered-by-groovy.jpg" alt="groovy" /></a>
+    <a href="http://tomcat.apache.org"><img style="border: 0" src="/images/powered/powered-by-tomcat.jpg" alt="tomcat" /></a>
+    <a href="http://www.debian.org"><img style="border: 0" src="/images/powered/powered-by-debian.jpg" alt="debian" /></a>
+</div>
+
+<hr>
+<div style="text-align: center">
+    <br>
+    
+        You are currently using the <b>desktop version</b> of the site but you may want to try the <a href="?flavour=mobile">mobile version</a>.
+    
+</div>
+
+
+
+			</div>
+			<div id="spinner" class="spinner" style="display:none;">Loading&hellip;</div>
+	        <!--r:layoutResources /-->
+		</div>
+	</body>
+	
+</html>

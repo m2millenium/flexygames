@@ -47,7 +47,7 @@
                             <g:if test="${status == flexygames.Participation.Status.REQUESTED.code}">
                                 <option disabled>── <g:message code="availability"/> ──</option>
                             </g:if>
-                            <g:if test="${status == flexygames.Participation.Status. APPROVED.code}">
+                            <g:if test="${status == flexygames.Participation.Status.APPROVED.code}">
                                 <option disabled>── <g:message code="selection"/> ──</option>
                             </g:if>
                             <g:if test="${status == flexygames.Participation.Status.DONE_GOOD.code}">
