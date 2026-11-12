@@ -100,7 +100,8 @@ class DeveloperDataSeeder {
                     user: mario,
                     team: teamMap["Team Mario"],
                     manager: true,
-                    startIndex: new Date() - 365
+                    regularForTraining: true,
+                    regularForCompetition: false
                 ).save(failOnError: true, flush: true)
             } else if (!membership.manager) {
                 membership.manager = true
@@ -117,6 +118,8 @@ class DeveloperDataSeeder {
         def playersData = [
             // Mario - Administrator, manager
             [username: "mario", firstName: "Mario", lastName: "Biasi", email: "mario.biasi@gmail.com", password: "password", teamName: "Team Mario"],
+            // MarioNew - Administrator, manager of all teams
+            [username: "marioNew", firstName: "Mario", lastName: "New", email: "mario.new@example.com", password: "passwordNew", teamName: "Team Mario"],
             // Giulla - Administrator
             [username: "giulia", firstName: "Giulla", lastName: "Rossi", email: "giulia@example.com", password: "password", teamName: "Team Giulla"],
             // Luca - Player
@@ -137,8 +140,10 @@ class DeveloperDataSeeder {
         ]
 
         playersData.each { p ->
+            println "Processing user: ${p.username}"
             def user = User.findByUsername(p.username)
             if (!user) {
+                println "Creating new user: ${p.username}"
                 user = new User(
                     avatarUrl: "https://api.dicebear.com/9.x/initials/svg?seed=${p.username}&name=${extractInitials(p.username)}&backgroundColor=FF6B6B",
                     avatarColor: "FF6B6B",
@@ -155,11 +160,11 @@ class DeveloperDataSeeder {
 
                 // Assign roles BEFORE saving
                 user.addToRoles(playerRole)
-                if (p.username in ["mario", "giulia"]) {
+                if (p.username in ["mario", "giulia", "marioNew"]) {
                     user.addToRoles(adminRole)
                 }
-                // Assign Manager role to team managers
-                if (p.username == "mario") {
+                // Assign Manager role to team managers (all teams for marioNew)
+                if (p.username == "mario" || p.username == "marioNew") {
                     user.addToRoles(managerRole)
                 }
 
@@ -169,6 +174,7 @@ class DeveloperDataSeeder {
 
                 // Now save AFTER roles are assigned
                 user.save(failOnError: true, flush: true)
+                println "User saved: ${p.username}, roles: ${user.roles*.name}"
 
                 // Add to team
                 def team = teams[p.teamName]
@@ -180,6 +186,21 @@ class DeveloperDataSeeder {
                         regularForTraining: true,
                         regularForCompetition: false
                     ).save(failOnError: true, flush: true)
+                }
+                // marioNew is manager of all teams
+                if (p.username == "marioNew") {
+                    teams.each { tn, t ->
+                        def membership = Membership.findWhere(user: user, team: t)
+                        if (!membership) {
+                            new Membership(
+                                user: user,
+                                team: t,
+                                manager: true,
+                                regularForTraining: true,
+                                regularForCompetition: false
+                            ).save(failOnError: true, flush: true)
+                        }
+                    }
                 }
             }
             playerMap[p.username] = user

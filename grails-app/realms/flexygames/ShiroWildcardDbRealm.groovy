@@ -18,6 +18,10 @@ class ShiroWildcardDbRealm implements GrailsShiroRealm, SimplifiedRealm {
 
     CredentialsMatcher credentialMatcher
 
+    void setCredentialMatcher(CredentialsMatcher credentialMatcher) {
+        this.credentialMatcher = credentialMatcher
+    }
+
     ShiroWildcardDbRealm() {
         setTokenClass(UsernamePasswordToken)
         setPermissionResolver(new WildcardPermissionResolver())

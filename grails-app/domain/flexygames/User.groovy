@@ -49,7 +49,7 @@ class User implements Comparable<User>, HttpSessionBindingListener {
 		Membership membershipInCurrentSession // transient
 		SortedSet<Team> teamsInCurrentSession = new TreeSet<Team>() // transient
 
-		int participationsInLast7Days // computed: participations in the last 7 days (from last Friday)
+		int participationsInLast6Days // computed: participations in the 6 days before a given session date
 
 	SortedSet<Role> roles
 	Set<Membership> memberships // Set instead of SortedSet to avoid a NPE on ManagerController.removeMembership()
@@ -83,10 +83,10 @@ class User implements Comparable<User>, HttpSessionBindingListener {
 	}
 
 	static transients = [ 'authService', 'name',
-								  'scoreInCurrentSession', 'membershipInCurrentSession', 'teamsInCurrentSession',
-								  'allSubscribedTeams', 'allSubscribedSessionGroups', 'allSessions',
-								  'wins', 'defeats', 'draws', 'rounds', 'votingScore', 'actionScore', 'effectiveParticipations',
-								  'participationsInLast7Days' ]
+			'scoreInCurrentSession', 'membershipInCurrentSession', 'teamsInCurrentSession',
+			'allSubscribedTeams', 'allSubscribedSessionGroups', 'allSessions',
+			'wins', 'defeats', 'draws', 'rounds', 'votingScore', 'actionScore', 'effectiveParticipations',
+			'participationsInLast6Days' ]
 
 	// Be careful with the character encoding:
 	// - following line is ok in ANSI or ISO-8859
@@ -483,28 +483,57 @@ class User implements Comparable<User>, HttpSessionBindingListener {
 	// Computed fields
 	///////////////////////////////////////////////////////////////////////////
 
-	def getParticipationsInLast7Days() {
-		// Calculate last Friday (7 days ago from today)
-		Date now = new Date()
-		Date lastFriday = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+	// Get participations in the 6 days before a given session date
+	// Window: from (sessionDate - 6 days) inclusive up to sessionDate (exclusive)
+	// Counts all participations with valid statuses (all except UNDONE)
+	def getParticipationsInLast6Days(Date sessionDate) {
+		if (!sessionDate) {
+			return 0
+		}
 
-		// Find participations in the last 7 days where player was accepted or present
-		// Status codes for accepted/present: DONE_GOOD, DONE_LATE, DONE_BAD, APPROVED, APPROVED_EXTRA
-		def approvedStatuses = [
+		// Calculate the date 6 days before the session date (window start, inclusive)
+		Date windowStart = new Date(sessionDate.getTime() - 6 * 24 * 60 * 60 * 1000)
+
+		// Normalize windowStart to midnight for date-only comparison
+		windowStart.clearTime()
+
+		// Window end is the session date at midnight (exclusive upper bound)
+		Date windowEnd = new Date(sessionDate.getTime())
+		windowEnd.clearTime()
+
+		// Status codes to count: all statuses except UNDONE (all valid participations)
+		def countedStatuses = [
+			Participation.Status.REQUESTED.code,
+			Participation.Status.AVAILABLE.code,
+			Participation.Status.DECLINED.code,
+			Participation.Status.APPROVED.code,
+			Participation.Status.APPROVED_EXTRA.code,
+			Participation.Status.WAITING_LIST.code,
+			Participation.Status.REMOVED.code,
 			Participation.Status.DONE_GOOD.code,
 			Participation.Status.DONE_LATE.code,
-			Participation.Status.DONE_BAD.code,
-			Participation.Status.APPROVED.code,
-			Participation.Status.APPROVED_EXTRA.code
+			Participation.Status.DONE_BAD.code
 		]
 
-		def participations = Participation.findAllByPlayerAndStatusCodeIn(this, approvedStatuses)
+		// Find participations for this player with counted statuses
+		def participations = Participation.where {
+			player == this &&
+			session.date != null &&
+			statusCode in countedStatuses
+		}.list()
 
 		int count = 0
 		participations.each { p ->
-			Date sessionDate = p.session.date
-			if (sessionDate != null && sessionDate.getTime() >= lastFriday.getTime()) {
-				count++
+			Date pSessionDate = p.session.date
+			if (pSessionDate != null) {
+				// Normalize session date to midnight for date-only comparison
+				Date pSessionDateNormalized = new Date(pSessionDate.getTime())
+				pSessionDateNormalized.clearTime()
+				// Count if: windowStart <= sessionDate < windowEnd
+				if (pSessionDateNormalized.getTime() >= windowStart.getTime() &&
+					pSessionDateNormalized.getTime() < windowEnd.getTime()) {
+					count++
+				}
 			}
 		}
 		return count
