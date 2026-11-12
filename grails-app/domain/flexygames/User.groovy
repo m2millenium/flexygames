@@ -501,10 +501,9 @@ class User implements Comparable<User>, HttpSessionBindingListener {
 		Date windowEnd = new Date(sessionDate.getTime())
 		windowEnd.clearTime()
 
-		// Status codes to count: all statuses except UNDONE (all valid participations)
+		// Status codes to count: all statuses except UNDONE and AVAILABLE
 		def countedStatuses = [
 			Participation.Status.REQUESTED.code,
-			Participation.Status.AVAILABLE.code,
 			Participation.Status.DECLINED.code,
 			Participation.Status.APPROVED.code,
 			Participation.Status.APPROVED_EXTRA.code,
@@ -536,6 +535,6 @@ class User implements Comparable<User>, HttpSessionBindingListener {
 				}
 			}
 		}
-		return count
+		return count as int
 	}
 }

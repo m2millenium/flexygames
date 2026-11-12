@@ -51,13 +51,24 @@
                                 <g:set var="amnestyTime" value="${java.lang.System.currentTimeMillis() - Integer.valueOf(grailsApplication.config.flexygames.amnestyDaysNbr) * 24 * 60 * 60 * 1000}" />
                                 <nobr>
                                     <span style="font-size: 12px;">
-                                        <g:set var="count" value="${p.player.participationCounter}"/>
-                                        <b>${count}</b>
-                                        <g:if test="${count > 1}"><g:message code="participations"/></g:if>
-                                        <g:else><g:message code="participation"/></g:else>
-                                    </span>
-                                </nobr>
-                                <br/>
+                                                                            <g:set var="count" value="${p.player.participationCounter}"/>
+                                                                            <b>${count}</b>
+                                                                            <g:if test="${count > 1}"><g:message code="participations"/></g:if>
+                                                                            <g:else><g:message code="participation"/></g:else>
+                                                                        </span>
+                                                                    </nobr>
+                                                                    <br/>
+                                                                    <nobr>
+                                                                        <span style="font-size: 12px; color: blue;">
+                                                                            <g:set var="playerLast6Days" value="${p.player.participationsInLast6Days(sessionInstance.date)}"/>
+                                                                            <g:if test="${playerLast6Days > 0}">
+                                                                                <b>${playerLast6Days}</b>
+                                                                                <g:if test="${playerLast6Days > 1}">matches played in the last 6 days</g:if>
+                                                                                <g:else>match played in the last 6 days</g:else>
+                                                                                <br/>
+                                                                            </g:if>
+                                                                        </span>
+                                                                    </nobr>
                                 <nobr>
                                     <span style="color: ${flexygames.Participation.Status.UNDONE.color}">
                                         <g:set var="count" value="${p.player.absenceCounter}"/>

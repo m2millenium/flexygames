@@ -25,7 +25,7 @@
 			        </tr>
 			        <tr style="width: 100%;">
 			            <td colspan="10" style="text-align: right; vertical-align: top; padding-top: 10px;">
-			                <g:set var="last6DaysCount" value="0" />
+			                <g:set var="last6DaysCount" value="${0}" />
 			                <g:each in="${sessionInstance.participations*.player}" var="player">
 			                    <g:set var="playerLast6Days" value="${player?.participationsInLast6Days(sessionInstance.date)}" />
 			                    <g:set var="last6DaysCount" value="${last6DaysCount + playerLast6Days}" />
