@@ -59,15 +59,19 @@
                                                                     </nobr>
                                                                     <br/>
                                                                     <nobr>
-                                                                        <span style="font-size: 10px; color: blue;">
-                                                                            <g:set var="playerLast6Days" value="${p.player.participationsInLast6Days(sessionInstance.date)}"/>
-                                                                            <g:if test="${playerLast6Days > 0}">
-                                                                                <b>${playerLast6Days}</b>
-                                                                                <g:if test="${playerLast6Days > 1}">in the last 6 days</g:if>
-                                                                                <g:else>in the last 6 days</g:else>
-                                                                                <br/>
-                                                                            </g:if>
-                                                                        </span>
+                                                                        <g:set var="today" value="${new Date().clearTime()}"/>
+                                                                        <g:set var="sessionDateClear" value="${sessionInstance.date.clearTime()}"/>
+                                                                        <g:if test="${sessionDateClear >= today}">
+                                                                            <span style="font-size: 10px; color: blue;">
+                                                                                <g:set var="playerLast6Days" value="${p.player.participationsInLast6Days(sessionInstance.date)}"/>
+                                                                                <g:if test="${playerLast6Days > 0}">
+                                                                                    <b>${playerLast6Days}</b>
+                                                                                    <g:if test="${playerLast6Days > 1}">in the last 6 days</g:if>
+                                                                                    <g:else>in the last 6 days</g:else>
+                                                                                    <br/>
+                                                                                </g:if>
+                                                                            </span>
+                                                                        </g:if>
                                                                     </nobr>
                                 <nobr>
                                     <span style="color: ${flexygames.Participation.Status.UNDONE.color}">
