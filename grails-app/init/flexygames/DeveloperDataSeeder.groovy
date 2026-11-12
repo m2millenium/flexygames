@@ -322,6 +322,42 @@ class DeveloperDataSeeder {
             // Create participations for this session
             createParticipationsForSession(session, players, random)
         }
+        // Create 4 future sessions in the next week
+        (1..4).each { i ->
+            def group = sessionGroups[i % sessionGroups.size()]
+            def playground = group.defaultPlayground
+            def sessionDate = new Date() + i  // Sessions starting tomorrow
+            
+            // Set session time to afternoon (17:00)
+            def sessionTime = sessionDate.clone() as Date
+            sessionTime.setHours(17)
+            sessionTime.setMinutes(0)
+            sessionTime.setSeconds(0)
+            
+            def sessionName = "Session #${200 + i} - ${sessionTime.format('yyyy-MM-dd')}"
+
+            def session = Session.findByName(sessionName)
+            if (!session) {
+                session = new Session(
+                    name: sessionName,
+                    date: sessionTime,
+                    duration: 90,
+                    rdvBeforeStart: 15,
+                    lockingTime: 24 * 60,  // Locked 24 hours before
+                    playground: playground,
+                    type: group.defaultType,
+                    group: group,
+                    creation: new Date(),
+                    lastUpdate: new Date()
+                ).save(failOnError: true, flush: true)
+            }
+
+            sessions << session
+
+            // Create participations for this session
+            createParticipationsForSession(session, players, random)
+        }
+
 
         // Create session rounds (games) for each session
         sessions.each { session ->
@@ -331,6 +367,8 @@ class DeveloperDataSeeder {
         }
 
         // Calculate counter statistics from participations
+        def totalSessions = sessions.size()
+        println "Developer Data Seeding: Created ${totalSessions} total sessions (${10} historical + ${4} future)"
         calculateUserCounters()
 
         return sessions
@@ -347,18 +385,24 @@ class DeveloperDataSeeder {
             def statusCode
             def lastUpdater = player.username
 
-            // Randomly assign status - mostly DONE_*
-            def statusRandom = random.nextFloat()
-            if (statusRandom < 0.5) {
-                statusCode = "DONE_GOOD"  // 50% good performance
-            } else if (statusRandom < 0.7) {
-                statusCode = "DONE_LATE"  // 20% late
-            } else if (statusRandom < 0.85) {
-                statusCode = "DONE_BAD"   // 15% bad performance
-            } else if (statusRandom < 0.95) {
-                statusCode = "AVAILABLE"  // 10% available (didn't play)
+            // For future sessions, only use REQUESTED status
+            // For past sessions, use DONE_* statuses
+            if (session.date.after(new Date())) {
+                statusCode = "REQUESTED"  // Future session - player has requested to participate
             } else {
-                statusCode = "REQUESTED"  // 5% requested (didn't show)
+                // Past session - random status
+                def statusRandom = random.nextFloat()
+                if (statusRandom < 0.5) {
+                    statusCode = "DONE_GOOD"  // 50% good performance
+                } else if (statusRandom < 0.7) {
+                    statusCode = "DONE_LATE"  // 20% late
+                } else if (statusRandom < 0.85) {
+                    statusCode = "DONE_BAD"   // 15% bad performance
+                } else if (statusRandom < 0.95) {
+                    statusCode = "AVAILABLE"  // 10% available (didn't play)
+                } else {
+                    statusCode = "REQUESTED"  // 5% requested (didn't show)
+                }
             }
 
             def participation = Participation.findBySessionAndPlayer(session, player)
@@ -373,13 +417,13 @@ class DeveloperDataSeeder {
                 ).save(failOnError: true, flush: true)
             }
 
-            // Create game actions for DONE_GOOD participants
-            if (statusCode == "DONE_GOOD" && random.nextFloat() < 0.3) {
+            // Create game actions only for past sessions
+            if (session.date.before(new Date()) && statusCode == "DONE_GOOD" && random.nextFloat() < 0.3) {
                 createGameAction(session, player, random)
             }
 
-            // Create votes for this participation
-            if (statusCode in ["DONE_GOOD", "DONE_LATE", "DONE_BAD"] && random.nextFloat() < 0.4) {
+            // Create votes only for past sessions
+            if (session.date.before(new Date()) && statusCode in ["DONE_GOOD", "DONE_LATE", "DONE_BAD"] && random.nextFloat() < 0.4) {
                 createVote(session, player, random)
             }
         }

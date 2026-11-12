@@ -17,7 +17,7 @@
 - **Game types**: Football, Volleyball (with skills)
 - **Playgrounds**: 5 locations (UrbanFoot de Bonneuil, DreamFoot de Meudon, Lycée Turgot, Lycée Paul-Valérie, Stade Jean Bouin)
 - **Session groups**: 5 groups with default teams/playgrounds
-- **Historical sessions**: 10 past sessions with participations, rounds, game actions, and votes
+|- **Historical sessions**: 10 past sessions with participations, rounds, game actions, and votes\n- **Future sessions**: 4 sessions in the next week with participations (REQUESTED status)
 
 ### How seeding works
 1. `BootStrap.init()` clears all existing data (`User.deleteAll()`, `Team.deleteAll()`, etc.)
@@ -191,7 +191,7 @@ class BootStrap {
 | `createGameTypes()` | Creates Football and Volleyball |
 | `createPlaygrounds()` | Creates 5 playgrounds |
 | `createSessionGroups()` | Creates 5 session groups |
-| `createHistoricalSessions()` | Creates 10 past sessions with data |
+| `createHistoricalSessions()` | Creates 10 past sessions + 4 future sessions with data |
 | `createParticipationsForSession()` | Adds players to sessions |
 | `createGameAction()` | Adds goals, assists, etc. |
 | `createVote()` | Adds player votes |
@@ -208,6 +208,6 @@ new Sha512Hash(password).toHex()
 - All users are automatically added to their respective teams
 - `marioNew` is manager of ALL teams (not just one)
 - `mario` is manager of Team Mario
-- Historical sessions span the last 10 days
+- Historical sessions span the last 10 days; future sessions are created for the next week
 - Each session has 2-3 rounds with teams A and B
 - Player performance is tracked with votes and status codes (DONE_GOOD, DONE_LATE, DONE_BAD, AVAILABLE, REQUESTED)

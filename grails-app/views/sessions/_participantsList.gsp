@@ -59,12 +59,12 @@
                                                                     </nobr>
                                                                     <br/>
                                                                     <nobr>
-                                                                        <span style="font-size: 12px; color: blue;">
+                                                                        <span style="font-size: 10px; color: blue;">
                                                                             <g:set var="playerLast6Days" value="${p.player.participationsInLast6Days(sessionInstance.date)}"/>
                                                                             <g:if test="${playerLast6Days > 0}">
                                                                                 <b>${playerLast6Days}</b>
-                                                                                <g:if test="${playerLast6Days > 1}">matches played in the last 6 days</g:if>
-                                                                                <g:else>match played in the last 6 days</g:else>
+                                                                                <g:if test="${playerLast6Days > 1}">in the last 6 days</g:if>
+                                                                                <g:else>in the last 6 days</g:else>
                                                                                 <br/>
                                                                             </g:if>
                                                                         </span>
