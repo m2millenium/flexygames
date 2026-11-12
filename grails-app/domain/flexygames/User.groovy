@@ -49,7 +49,7 @@ class User implements Comparable<User>, HttpSessionBindingListener {
 		Membership membershipInCurrentSession // transient
 		SortedSet<Team> teamsInCurrentSession = new TreeSet<Team>() // transient
 
-		int participationsInLast6Days // computed: participations in the 6 days before a given session date
+	// participationsInLast6Days is computed via method: participationsInLast6Days(Date sessionDate)
 
 	SortedSet<Role> roles
 	Set<Membership> memberships // Set instead of SortedSet to avoid a NPE on ManagerController.removeMembership()
@@ -85,8 +85,7 @@ class User implements Comparable<User>, HttpSessionBindingListener {
 	static transients = [ 'authService', 'name',
 			'scoreInCurrentSession', 'membershipInCurrentSession', 'teamsInCurrentSession',
 			'allSubscribedTeams', 'allSubscribedSessionGroups', 'allSessions',
-			'wins', 'defeats', 'draws', 'rounds', 'votingScore', 'actionScore', 'effectiveParticipations',
-			'participationsInLast6Days' ]
+			'wins', 'defeats', 'draws', 'rounds', 'votingScore', 'actionScore', 'effectiveParticipations' ]
 
 	// Be careful with the character encoding:
 	// - following line is ok in ANSI or ISO-8859
@@ -486,7 +485,8 @@ class User implements Comparable<User>, HttpSessionBindingListener {
 	// Get participations in the 6 days before a given session date
 	// Window: from (sessionDate - 6 days) inclusive up to sessionDate (exclusive)
 	// Counts all participations with valid statuses (all except UNDONE)
-	def getParticipationsInLast6Days(Date sessionDate) {
+	// NOTE: Named 'participationsInLast6Days' (not 'getParticipationsInLast6Days') because 'participationsInLast6Days' is a declared transient field
+	int participationsInLast6Days(Date sessionDate) {
 		if (!sessionDate) {
 			return 0
 		}
