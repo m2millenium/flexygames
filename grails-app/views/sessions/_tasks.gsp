@@ -7,14 +7,14 @@
     </div>
     <g:set var="defaultDisplayForSummaryZone" value="block" />
     <g:set var="defaultDisplayForDetailedZone" value="none" />
-    <g:if test="${sessionInstance.tasks.size() + 1 > 0}">
+    <g:if test="${sessionInstance.tasks?.size() ? sessionInstance.tasks.size() + 1 > 0 : false}">
         <g:set var="defaultDisplayForSummaryZone" value="none" />
         <g:set var="defaultDisplayForDetailedZone" value="table" />
     </g:if>
     <div class="sessionZoneContent">
         <div id="tasksSummaryZone" style="display: ${defaultDisplayForSummaryZone};">
-            <g:if test="${sessionInstance.tasks.size() > 0}" >
-                <g:message code="session.show.tasks.tasksNbr"/> : <b>${sessionInstance.tasks.size()}</b>
+            <g:if test="${sessionInstance.tasks?.size() ? sessionInstance.tasks.size() > 0 : false}" >
+                <g:message code="session.show.tasks.tasksNbr"/> : <b>${sessionInstance.tasks?.size() ?: 0}</b>
             </g:if>
             <g:else>
                 <g:message code="session.show.tasks.noTask"/>

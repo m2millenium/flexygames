@@ -33,6 +33,7 @@ class SessionsController {
 
 		// Update session with params
 		def currentSessionGroup
+		println "list() called: filteredTeam=${params.filteredTeam}, filteredSessionGroup=${params.filteredSessionGroup}, session.filteredTeam=${session.filteredTeam}, session.filteredSessionGroup=${session.filteredSessionGroup}"
 		if (params.filteredTeam) {
 			session.filteredTeam = Integer.parseInt(params.filteredTeam)
 			// If the user changes filtered team we need to reset the session group to "any"
@@ -40,18 +41,20 @@ class SessionsController {
 		} else if (params.filteredSessionGroup) {
 			session.filteredSessionGroup = Integer.parseInt(params.filteredSessionGroup)
 			// If the user changes filtered session group we need to reset the team too
-			if (session.filteredSessionGroup?.intValue() > 0) {
+			if (session.filteredSessionGroup && session.filteredSessionGroup.intValue() > 0) {
 				currentSessionGroup = SessionGroup.get(session.filteredSessionGroup)
 				session.filteredTeam = currentSessionGroup?.defaultTeams?.first()?.getId() ?: 0
 			}
 		}
+		println "After filter logic: session.filteredTeam=${session.filteredTeam}, session.filteredSessionGroup=${session.filteredSessionGroup}"
 
 		// Prepare data for the view
 		def sessionList
 		def sessionListSize = 0
 		def sessionGroups
 		//SessionGroupForSelectTag currentSessionGroupForSelectTag = new SessionGroupForSelectTag()
-		if (session.filteredSessionGroup?.intValue() > 0) {
+		println "Before session query: session.filteredSessionGroup=${session.filteredSessionGroup}, session.filteredTeam=${session.filteredTeam}"
+		if (session.filteredSessionGroup && session.filteredSessionGroup.intValue() > 0) {
 			if (currentSessionGroup == null) currentSessionGroup = SessionGroup.get(session.filteredSessionGroup)
 			//currentSessionGroupForSelectTag = new SessionGroupForSelectTag(currentSessionGroup.id, currentSessionGroup.toString())
 			sessionGroups = currentSessionGroup?.defaultTeams?.first()?.sessionGroups
@@ -208,30 +211,43 @@ class SessionsController {
 	// and restricted to authenticated users (via Shiro interceptor)
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+
 	def update() {
+		println "update() called with params: id=${params.id}, statusCode=${params.statusCode}, userLog=${params.userLog}"
+		println "params.id = " + params.id
+		println "params.statusCode = " + params.statusCode
 		Participation participation = Participation.get(params.id)
 		if (!participation) {
-			flash.error = "${message(code: 'default.not.found.message', args: [message(code: 'session', default: 'Participation'), params.id])}"
+			println "Participation not found for id: ${params.id}"
+			flash.error = "${message(code: "default.not.found.message", args: [message(code: "session", default: "Participation"), params.id])}"
+			return redirect(action: "list")
+		}
+		if (!participation.session) {
+			println "Participation session is null for id: ${params.id}"
+			flash.error = "Participation session is null"
 			return redirect(action: "list")
 		}
 		try {
 			sessionsService.updatePlayerStatus(request.currentUser, participation, params.statusCode, params.userLog)
-			def newStatus = message(code: 'participation.status.' + params.statusCode)
-			flash.message = "${message(code: 'session.show.update.success', args: [newStatus])}"
+			def newStatus = message(code: "participation.status." + params.statusCode)
+			flash.message = "${message(code: "session.show.update.success", args: [newStatus])}"
+			println "Status updated successfully to ${params.statusCode}"
+			return redirect(action: "show", id: participation.session.id)
 		} catch (Exception e) {
 			println "Exception on status update: " + e.getMessage()
-			flash.error = "${message(code: 'session.show.update.error', args: [e.message])}"
-			return redirect(action: "show", id:participation.session.id)
+			println "Session ID: " + participation.session?.id
+			flash.error = "${message(code: "session.show.update.error", args: [e.message])}"
+			return redirect(action: "show", id: participation.session?.id)
 		}
 
 		// If user comes from another FG pages (such as the homepage or mySessions) we redirect to it
-		String referer =  request.getHeader('referer')
-		if (referer.contains(grailsApplication.config.grails.serverURL)) {
+		String referer =  request.getHeader("referer")
+		if (referer && referer.contains(grailsApplication.config.grails.serverURL)) {
 			// Maybe adding a salt parameter solve the issue with Chrome under Android
-			return redirect(url:referer + (referer.contains('?') ? '&' : '?') + "salt=" + UUID.randomUUID().toString())
+			return redirect(url:referer + (referer.contains("?") ? "&" : "?") + "salt=" + UUID.randomUUID().toString())
 		}
 		// Else we redirect to the session page
-		return redirect(action: "show", id:participation.session.id)
+		return redirect(action: "show", id: participation.session.id)
 	}
 
 	def join(){

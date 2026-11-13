@@ -4,9 +4,10 @@
 </g:if>
 <g:if test="${part!=null}">
     <td style="text-align: center; vertical-align: middle; border: solid black 1px; background-color: ${flexygames.Participation.Status.color(part?.statusCode)}; ">
-        <g:form name="participationStatusForm${part.id}" method="get" controller="sessions" action="update">
+        <g:form name="participationStatusForm${part.id}" method="post" controller="sessions" action="update">
             <g:hiddenField name="id" value="${part.id}"/>
             <g:hiddenField name="userLog" value=""/>
+            <input type="hidden" name="statusCode" value="${part.statusCode}" id="statusCodeInput${part.id}"/>
             <g:set var="possibleStatus" value="${[part.statusCode]}"/>
             <!-- Check if session is managed by current user only if required -->
             <g:if test="${allStatusesArePossible || sessionIsManagedByCurrentUser}">
@@ -37,12 +38,19 @@
                 </g:if>
             </g:else>
             <g:if test="${possibleStatus.size > 1}">
-                <script>var promptMsg = '${message(code:'session.show.participants.enterMessage')}'</script>
-                <g:if test="${allStatusesArePossible || sessionIsManagedByCurrentUser}">
-                    <select
-                            onChange="document.getElementById('participationStatusForm${part.id}').userLog.value = prompt(promptMsg, '');
-                            document.getElementById('participationStatusForm${part.id}').submit()"
-                            name="statusCode" style="font-size : 10px;">
+            <g:if test="${allStatusesArePossible || sessionIsManagedByCurrentUser}">
+                <select
+                        onChange="
+                            var newStatus = this.value;
+                            var userLog = '';
+                            if (newStatus == 'DECLINED') {
+                                userLog = prompt('${message(code:'session.show.participants.enterMessage')}', '');
+                            }
+                            document.getElementById('participationStatusForm${part.id}').userLog.value = userLog;
+                            document.getElementById('statusCodeInput${part.id}').value = newStatus;
+                            document.getElementById('participationStatusForm${part.id}').submit()
+                        "
+                        style="font-size : 10px;">
                         <g:each in="${possibleStatus}" var="status">
                             <g:if test="${status == flexygames.Participation.Status.REQUESTED.code}">
                                 <option disabled>── <g:message code="availability"/> ──</option>
@@ -60,10 +68,18 @@
                     </select>
                 </g:if>
                 <g:else>
-                    <g:select
-                            onChange="document.getElementById('participationStatusForm${part.id}').userLog.value = prompt(promptMsg, '');
-		                    	document.getElementById('participationStatusForm${part.id}').submit()"
-                            name="statusCode" from="${possibleStatus}" value="${part.statusCode}"
+                    <g:select name="status"
+                            onChange="
+                                var newStatus = this.value;
+                                var userLog = '';
+                                if (newStatus == 'DECLINED') {
+                                    userLog = prompt('${message(code:'session.show.participants.enterMessage')}', '');
+                                }
+                                document.getElementById('participationStatusForm${part.id}').userLog.value = userLog;
+                                document.getElementById('statusCodeInput${part.id}').value = newStatus;
+                                document.getElementById('participationStatusForm${part.id}').submit()
+                            "
+                            from="${possibleStatus}" value="${part.statusCode}"
                             valueMessagePrefix="participation.status"
                             style="font-size : 14px"/>
                 </g:else>

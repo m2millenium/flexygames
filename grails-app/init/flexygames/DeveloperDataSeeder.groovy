@@ -320,7 +320,10 @@ class DeveloperDataSeeder {
             sessions << session
 
             // Create participations for this session
-            createParticipationsForSession(session, players, random)
+            // Include some historical players (who don't have a session today)
+            def historicalPlayers = sessions.take(10).collectMany { it.participations.collect { p -> p.player } }.unique()
+            def futurePlayers = historicalPlayers.collectEntries { [it.username, it] }
+            createParticipationsForSession(session, futurePlayers, random, sessions)
         }
         // Create 4 future sessions in the next week
         (1..4).each { i ->
@@ -355,7 +358,8 @@ class DeveloperDataSeeder {
             sessions << session
 
             // Create participations for this session
-            createParticipationsForSession(session, players, random)
+            // Use all players - the filter in createParticipationsForSession will ensure max 1 session per player per day
+            createParticipationsForSession(session, players, random, sessions)
         }
 
 
@@ -374,12 +378,23 @@ class DeveloperDataSeeder {
         return sessions
     }
 
-    private static void createParticipationsForSession(Session session, Map<String, User> players, Random random) {
-        def playersList = players.values().toList()
-        def numParticipants = 8 + random.nextInt(5)  // 8-12 participants
+    private static void createParticipationsForSession(Session session, Map<String, User> players, Random random, List<Session> allSessions) {
+        // Get players who already participated in a session on this date
+        def sessionDate = session.date.clearTime()
+        def playersInSessionToday = allSessions.findAll { s ->
+            s.date.clearTime() == sessionDate && s.id != session.id
+        }.collectMany { s ->
+            s.participations.collect { p -> p.player }
+        }.toSet()
 
-        // Shuffle and pick participants
-        playersList = playersList.sort { random.nextFloat() }.take(numParticipants)
+        def playersList = players.values().toList()
+        // Filter out players who already have a session today
+        def availablePlayers = playersList.findAll { !playersInSessionToday.contains(it) }
+        def numParticipants = 8 + random.nextInt(5)  // 8-12 participants
+        numParticipants = Math.min(numParticipants, availablePlayers.size())
+
+        // Shuffle and pick participants from available players
+        playersList = availablePlayers.sort { random.nextFloat() }.take(numParticipants)
 
         playersList.eachWithIndex { player, idx ->
             def statusCode

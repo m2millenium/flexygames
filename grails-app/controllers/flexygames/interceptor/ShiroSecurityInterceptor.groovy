@@ -36,6 +36,7 @@ class ShiroSecurityInterceptor {
         if ((controllerName == 'sessions' && actionName == 'list') ||
                 (controllerName == 'sessions' && actionName == 'show') ||
                 (controllerName == 'sessions' && actionName == 'forecast') ||
+                (controllerName == 'sessions' && actionName == 'update') ||
                 (controllerName == 'fileUploader' && actionName == 'show')) {
             return true
         }
