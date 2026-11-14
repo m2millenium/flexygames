@@ -400,10 +400,10 @@ class DeveloperDataSeeder {
             def statusCode
             def lastUpdater = player.username
 
-            // For future sessions, only use REQUESTED status
+            // For future sessions, use AVAILABLE status (players confirmed)
             // For past sessions, use DONE_* statuses
             if (session.date.after(new Date())) {
-                statusCode = "REQUESTED"  // Future session - player has requested to participate
+                statusCode = "AVAILABLE"  // Future session - players are confirmed available
             } else {
                 // Past session - random status
                 def statusRandom = random.nextFloat()
@@ -413,10 +413,8 @@ class DeveloperDataSeeder {
                     statusCode = "DONE_LATE"  // 20% late
                 } else if (statusRandom < 0.85) {
                     statusCode = "DONE_BAD"   // 15% bad performance
-                } else if (statusRandom < 0.95) {
-                    statusCode = "AVAILABLE"  // 10% available (didn't play)
                 } else {
-                    statusCode = "REQUESTED"  // 5% requested (didn't show)
+                    statusCode = "AVAILABLE"  // 15% available (didn't play)
                 }
             }
 
@@ -430,6 +428,12 @@ class DeveloperDataSeeder {
                     lastUpdate: session.date,
                     lastUpdater: lastUpdater
                 ).save(failOnError: true, flush: true)
+            } else {
+                // Update existing participation status for future sessions
+                if (session.date.after(new Date()) && statusCode == "AVAILABLE") {
+                    participation.statusCode = statusCode
+                    participation.save(failOnError: true, flush: true)
+                }
             }
 
             // Create game actions only for past sessions
