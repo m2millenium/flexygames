@@ -11,16 +11,24 @@ class DisplayService {
     UserAgentIdentService userAgentIdentService
 
     def isMobileDevice(request) {
-        if ('mobile'.equals(request.session.flavour)) {
-            return true
-        } else if ('desktop'.equals(request.session.flavour)) {
-            return false
-        } else {
-            if (userAgentIdentService.isMobile()) {
-                return true
+        Boolean isMobile = null
+        try {
+            if ('mobile'.equals(request.session.flavour)) {
+                isMobile = true
+            } else if ('desktop'.equals(request.session.flavour)) {
+                isMobile = false
             } else {
-                return false
+                if (userAgentIdentService.isMobile()) {
+                    isMobile = true
+                } else {
+                    isMobile = false
+                }
             }
+        } catch (IllegalStateException e) {
+            // Session might not be available if response was already committed
+            // In this case, default to desktop for admin endpoints
+            isMobile = false
         }
+        return isMobile
     }
 }

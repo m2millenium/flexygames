@@ -20,4 +20,8 @@ class SeederController {
         result << "</body></html>"
         render result.join()
     }
+    
+    def testSessions() {
+        render "Test successful - server is working"
+    }
 }

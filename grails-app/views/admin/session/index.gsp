@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <g:render template="/common/layout" />
+        <g:render template="/common/_layout" />
         <g:set var="entityName" value="${message(code: 'session.label', default: 'Session')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>

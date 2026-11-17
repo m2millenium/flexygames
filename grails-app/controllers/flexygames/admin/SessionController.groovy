@@ -14,8 +14,12 @@ class SessionController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
+        println "DEBUG: SessionController.index() called"
         params.max = Math.min(max ?: 10, 100)
-        respond sessionService.list(params), model:[sessionCount: sessionService.count()]
+        def sessions = sessionService.list(params)
+        def count = sessionService.count()
+        println "DEBUG: sessions.size() = ${sessions?.size()}, count = ${count}"
+        render(view: 'index', model: [sessionList: sessions, sessionCount: count])
     }
 
     def show(Long id) {

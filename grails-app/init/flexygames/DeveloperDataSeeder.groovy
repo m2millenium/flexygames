@@ -1,6 +1,8 @@
 package flexygames
 
+import grails.gorm.transactions.Transactional
 import org.apache.shiro.crypto.hash.Sha512Hash
+import java.util.Calendar
 
 /**
  * DeveloperDataSeeder
@@ -14,6 +16,7 @@ import org.apache.shiro.crypto.hash.Sha512Hash
  * 
  * Usage: Call DeveloperDataSeeder.seed() from a controller or console
  */
+@Transactional
 class DeveloperDataSeeder {
 
     static void seed() {
@@ -60,7 +63,9 @@ class DeveloperDataSeeder {
         println "Session groups created: ${sessionGroups.size()}"
 
         // 7. Create historical sessions (last 10 days) with completed participations
+        println "DEBUG: Calling createHistoricalSessions..."
         def sessions = createHistoricalSessions(sessionGroups, players, teams)
+        println "DEBUG: createHistoricalSessions returned ${sessions.size()} sessions"
         println "Sessions created: ${sessions.size()}"
 
         println "***** Developer Data Seeding Complete *****"
@@ -293,11 +298,16 @@ class DeveloperDataSeeder {
             def playground = group.defaultPlayground
             def sessionDate = new Date() - (10 - i)  // Sessions from yesterday back to 9 days ago
             
-            // Set session time to afternoon (17:00)
-            def sessionTime = sessionDate.clone() as Date
-            sessionTime.setHours(17)
-            sessionTime.setMinutes(0)
-            sessionTime.setSeconds(0)
+			// Set session time to 12:30 PM using Calendar
+            def calendar = Calendar.getInstance()
+            calendar.setTime(sessionDate)
+            calendar.set(Calendar.HOUR_OF_DAY, 12)
+            calendar.set(Calendar.MINUTE, 30)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+            def sessionTime = calendar.getTime()
+            
+            println "DEBUG: sessionDate = ${sessionDate.format('yyyy-MM-dd')}, sessionTime = ${sessionTime.format('yyyy-MM-dd HH:mm:ss')} (HOUR_OF_DAY=${calendar.get(Calendar.HOUR_OF_DAY)}, MINUTE=${calendar.get(Calendar.MINUTE)})"
             
             def sessionName = "Session #${100 + i} - ${sessionTime.format('yyyy-MM-dd')}"
 
@@ -314,16 +324,35 @@ class DeveloperDataSeeder {
                     group: group,
                     creation: new Date() - (11 - i),
                     lastUpdate: new Date() - (10 - i)
-                ).save(failOnError: true, flush: true)
+                )
+                println "DEBUG: Before save - session.date = ${session.date.format('yyyy-MM-dd HH:mm:ss')} (hours=${session.date?.hours}, minutes=${session.date?.minutes})"
+                session.save(failOnError: true, flush: true)
+                println "DEBUG: After save - session.date = ${session.date.format('yyyy-MM-dd HH:mm:ss')} (hours=${session.date?.hours}, minutes=${session.date?.minutes})"
+            } else {
+                // Update existing session time to 12:30 PM (always update historical sessions)
+                session.date = sessionTime
+                println "DEBUG: Before update save - session.date = ${session.date.format('yyyy-MM-dd HH:mm:ss')} (hours=${session.date?.hours}, minutes=${session.date?.minutes})"
+                session.save(failOnError: true, flush: true)
+                println "DEBUG: After update save - session.date = ${session.date.format('yyyy-MM-dd HH:mm:ss')} (hours=${session.date?.hours}, minutes=${session.date?.minutes})"
             }
 
             sessions << session
 
             // Create participations for this session
             // Include some historical players (who don't have a session today)
-            def historicalPlayers = sessions.take(10).collectMany { it.participations.collect { p -> p.player } }.unique()
-            def futurePlayers = historicalPlayers.collectEntries { [it.username, it] }
-            createParticipationsForSession(session, futurePlayers, random, sessions)
+            // For sessions 1-5, use players from sessions 0-4 (earlier in the list)
+            def playersForSession
+            if (sessions.size() <= 5) {
+                // For first 5 sessions, use all players
+                playersForSession = players
+            } else {
+                // For sessions 6-10, use players from the first 5 sessions
+                def earlierSessions = sessions.take(5)
+                playersForSession = earlierSessions.collectMany { it.participations.collect { p -> p.player } }.unique().collectEntries { [it.username, it] }
+            }
+            System.out.println("DEBUG: createParticipationsForSession called for session ${session.name}, ${playersForSession.size()} players available")
+            createParticipationsForSession(session, playersForSession, random, sessions)
+            System.out.println("DEBUG: createParticipationsForSession completed for session ${session.name}")
         }
         // Create 4 future sessions in the next week
         (1..4).each { i ->
@@ -331,11 +360,14 @@ class DeveloperDataSeeder {
             def playground = group.defaultPlayground
             def sessionDate = new Date() + i  // Sessions starting tomorrow
             
-            // Set session time to afternoon (17:00)
-            def sessionTime = sessionDate.clone() as Date
-            sessionTime.setHours(17)
-            sessionTime.setMinutes(0)
-            sessionTime.setSeconds(0)
+            // Set session time to 12:30 PM using Calendar
+            def calendar = Calendar.getInstance()
+            calendar.setTime(sessionDate)
+            calendar.set(Calendar.HOUR_OF_DAY, 12)
+            calendar.set(Calendar.MINUTE, 30)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+            def sessionTime = calendar.getTime()
             
             def sessionName = "Session #${200 + i} - ${sessionTime.format('yyyy-MM-dd')}"
 
@@ -353,6 +385,10 @@ class DeveloperDataSeeder {
                     creation: new Date(),
                     lastUpdate: new Date()
                 ).save(failOnError: true, flush: true)
+            } else {
+                // Update existing session time to 12:30 PM (always update historical sessions)
+                session.date = sessionTime
+                session.save(failOnError: true, flush: true)
             }
 
             sessions << session
@@ -379,6 +415,7 @@ class DeveloperDataSeeder {
     }
 
     private static void createParticipationsForSession(Session session, Map<String, User> players, Random random, List<Session> allSessions) {
+        System.out.println("DEBUG: createParticipationsForSession STARTED for ${session.name}")
         // Get players who already participated in a session on this date
         def sessionDate = session.date.clearTime()
         def playersInSessionToday = allSessions.findAll { s ->
@@ -427,12 +464,17 @@ class DeveloperDataSeeder {
                     userLog: "Participation created on ${new Date().format('yyyy-MM-dd HH:mm:ss')}",
                     lastUpdate: session.date,
                     lastUpdater: lastUpdater
-                ).save(failOnError: true, flush: true)
+                )
+                println "DEBUG: Saving participation for ${player.username} in ${session.name} (status: ${statusCode})"
+                participation.save(failOnError: true, flush: true)
+                println "DEBUG: Participation saved for ${player.username} in ${session.name}"
             } else {
                 // Update existing participation status for future sessions
                 if (session.date.after(new Date()) && statusCode == "AVAILABLE") {
                     participation.statusCode = statusCode
+                    println "DEBUG: Updating participation for ${player.username} in ${session.name}"
                     participation.save(failOnError: true, flush: true)
+                    println "DEBUG: Participation updated for ${player.username} in ${session.name}"
                 }
             }
 

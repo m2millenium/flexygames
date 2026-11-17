@@ -85,16 +85,22 @@ class SessionsController {
 		}
 
 		// Prepare data about participants
-		def allPlayers = session.participations*.player
+		def allPlayers = []
+		if (session.id) {
+			allPlayers = Participation.executeQuery("SELECT p.player FROM Participation p WHERE p.session.id = :sessionId", [sessionId: session.id])
+		}
 		if (allPlayers.size() > 0) {
 			// Since Participation.compareTo() is smart there is nothing special to do about sorting
 
 			// Prepare data about memberships of participants (for feesUpToDate)
-			Team defaultTeam = session.group.defaultTeams?.first()
-			if (!defaultTeam) {
-				// Fallback if defaultTeams is null or empty - find any team in the session group
-				defaultTeam = session.group.defaultTeams?.iterator()?.hasNext() ? session.group.defaultTeams?.iterator()?.next() : null
-			}
+					Team defaultTeam = null
+					if (session.group) {
+						defaultTeam = session.group.defaultTeams?.first()
+						if (!defaultTeam) {
+							// Fallback if defaultTeams is null or empty - find any team in the session group
+							defaultTeam = session.group.defaultTeams?.iterator()?.hasNext() ? session.group.defaultTeams?.iterator()?.next() : null
+						}
+					}
 			// Fetch membership of all users of the session in one shot
 			def allMembershipsForCurrentSession = defaultTeam ? Membership.findAllByTeamAndUserInList(defaultTeam, allPlayers) : []
 

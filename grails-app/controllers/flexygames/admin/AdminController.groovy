@@ -17,7 +17,9 @@ class AdminController {
 
 	def userStatsService;
 
-    def index = {        
+    def index() {
+        println "DEBUG: AdminController.index() called"
+        render(view: "index", model: [users: []])
     }
 
 	def  refreshPlayerCounters = {

@@ -2,61 +2,48 @@ package flexygames
 
 class UrlMappings {
 
-	static mappings = {
+    static mappings = {
         
-		"/$controller/$action?/$id?"{
-			constraints {
-				// apply constraints here
-			}
-		}
-
-		// commented in order to use a static index.html
-		//"/"(controller:"site", action:"home")
+        // Debug mapping
+        "/debug"(controller:"debug", action:"index")
         
-		"/"(controller:"site", action:"home")
-		
+        // Specific admin mappings must come before the generic one
+        "/admin"(controller:"admin", action:"index")
+        "/admin/comment"(controller:"comment", action:"index")
+        "/admin/gameAction"(controller:"gameAction", action:"index")
+        "/admin/gameSkill"(controller:"gameSkill", action:"index")
+        "/admin/gameType"(controller:"gameType", action:"index")
+        "/admin/membership"(controller:"membership", action:"index")
+        "/admin/participation"(controller:"participation", action:"index")
+        "/admin/playground"(controller:"playground", action:"index")
+        "/admin/reminder"(controller:"reminder", action:"index")
+        "/admin/role"(controller:"role", action:"index")
+        "/admin/session"(controller:"session", namespace:"admin")
+        "/admin/sessionGroup"(controller:"sessionGroup", action:"index")
+        "/admin/sessionRound"(controller:"sessionRound", action:"index")
+        "/admin/subscription"(controller:"subscription", action:"index")
+        "/admin/team"(controller:"team", action:"index")
+        "/admin/user"(controller:"user", action:"index")
+        "/admin/vote"(controller:"vote", action:"index")
+        
+        // commented in order to use a static index.html
+        //"/"(controller:"site", action:"home")
+        
+        "/"(controller:"site", action:"home")
+        
         "/home"(controller:"site", action:"home")
         
         "/about"(controller:"site", action:"about")
 
-		"500"(view:'/error')
+        "500"(view:'/error')
 
-		"404"(view:'/notFound')
-		
-		// turman : move all administration controller to the "admin" subdirectory
-
-		"/admin"(controller:"admin/admin")
-		
-		"/comment"(controller:"admin/comment")
-		
-		"/gameAction"(controller:"admin/gameAction")
-		
-		"/gameSkill"(controller:"admin/gameSkill")
-		
-		"/gameType"(controller:"admin/gameType")
-		
-		"/membership"(controller:"admin/membership")
-		
-		"/participation"(controller:"admin/participation")
-		
-		"/playground"(controller:"admin/playground")
-		
-		"/reminder"(controller:"admin/reminder")
-		
-		"/role"(controller:"admin/role")
-		
-		"/session"(controller:"admin/session")
-		
-		"/sessionGroup"(controller:"admin/sessionGroup")
-		
-		"/sessionRound"(controller:"admin/sessionRound")
-		
-		"/subscription"(controller:"admin/subscription")
-		
-		"/team"(controller:"admin/team")
-		
-		"/user"(controller:"admin/user")
-		
-		"/vote"(controller:"admin/vote")
-	}
+        "404"(view:'/notFound')
+        
+        // Generic controller mapping - must come last
+        "/$controller/$action?/$id?"{
+            constraints {
+                // apply constraints here
+            }
+        }
+    }
 }
