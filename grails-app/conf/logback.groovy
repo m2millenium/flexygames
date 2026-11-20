@@ -33,4 +33,6 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
     }
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
 }
+// Log Hibernate bound parameter values (diagnosing session.date UPDATEs)
+logger("org.hibernate.type.BasicBinder", TRACE, ['STDOUT'], false)
 root(DEBUG, ['STDOUT'])

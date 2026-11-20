@@ -298,11 +298,11 @@ class DeveloperDataSeeder {
             def playground = group.defaultPlayground
             def sessionDate = new Date() - (10 - i)  // Sessions from yesterday back to 9 days ago
             
-			// Set session time to 12:30 PM using Calendar
+			// Set session time to 17:00 using Calendar
             def calendar = Calendar.getInstance()
             calendar.setTime(sessionDate)
-            calendar.set(Calendar.HOUR_OF_DAY, 12)
-            calendar.set(Calendar.MINUTE, 30)
+            calendar.set(Calendar.HOUR_OF_DAY, 17)
+            calendar.set(Calendar.MINUTE, 0)
             calendar.set(Calendar.SECOND, 0)
             calendar.set(Calendar.MILLISECOND, 0)
             def sessionTime = calendar.getTime()
@@ -360,11 +360,11 @@ class DeveloperDataSeeder {
             def playground = group.defaultPlayground
             def sessionDate = new Date() + i  // Sessions starting tomorrow
             
-            // Set session time to 12:30 PM using Calendar
+            // Set session time to 17:00 using Calendar
             def calendar = Calendar.getInstance()
             calendar.setTime(sessionDate)
-            calendar.set(Calendar.HOUR_OF_DAY, 12)
-            calendar.set(Calendar.MINUTE, 30)
+            calendar.set(Calendar.HOUR_OF_DAY, 17)
+            calendar.set(Calendar.MINUTE, 0)
             calendar.set(Calendar.SECOND, 0)
             calendar.set(Calendar.MILLISECOND, 0)
             def sessionTime = calendar.getTime()
@@ -417,9 +417,14 @@ class DeveloperDataSeeder {
     private static void createParticipationsForSession(Session session, Map<String, User> players, Random random, List<Session> allSessions) {
         System.out.println("DEBUG: createParticipationsForSession STARTED for ${session.name}")
         // Get players who already participated in a session on this date
-        def sessionDate = session.date.clearTime()
+        // WARNING: Groovy's GDK clearTime() MUTATES the original Date object (returns the same instance).
+        // Call it on a copy only — calling it on session.date would corrupt the managed entity's time.
+        def sessionDate = new Date(session.date.getTime())
+        sessionDate.clearTime()
         def playersInSessionToday = allSessions.findAll { s ->
-            s.date.clearTime() == sessionDate && s.id != session.id
+            def sDate = new Date(s.date.getTime())
+            sDate.clearTime()
+            sDate == sessionDate && s.id != session.id
         }.collectMany { s ->
             s.participations.collect { p -> p.player }
         }.toSet()
@@ -640,5 +645,28 @@ class DeveloperDataSeeder {
             return "${parts[0][0]}${parts[-1][0]}".toUpperCase()
         }
         return username.substring(0, Math.min(2, username.length())).toUpperCase()
+    }
+    /**
+     * Update all sessions with 00:00 time to 17:00
+     */
+    static void updateSessionTimesTo1700() {
+        def sessions = Session.list()
+        def updatedCount = 0
+        sessions.each { session ->
+            def calendar = Calendar.getInstance()
+            calendar.setTime(session.date)
+            // Only update if the hour is 00:00
+            if (calendar.get(Calendar.HOUR_OF_DAY) == 0) {
+                calendar.set(Calendar.HOUR_OF_DAY, 17)
+                calendar.set(Calendar.MINUTE, 0)
+                calendar.set(Calendar.SECOND, 0)
+                calendar.set(Calendar.MILLISECOND, 0)
+                session.date = calendar.getTime()
+                session.save(failOnError: true, flush: true)
+                println "Updated session ${session.name} to 17:00"
+                updatedCount++
+            }
+        }
+        println "Session time update complete. Total sessions updated: ${updatedCount}"
     }
 }

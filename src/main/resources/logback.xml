@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Explicit logback configuration.
+    Spring Boot 1.5's LoggingSystem does not apply logging.level.* properties
+    when logback is initialized early (Grails bootRun), so the BasicBinder
+    TRACE logger is declared here natively (this file is on the classpath
+    root and is always loaded by logback itself).
+-->
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level --- [%thread] %logger{36} : %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- Diagnostic: print the exact values Hibernate binds for JDBC parameters -->
+    <logger name="org.hibernate.type.BasicBinder" level="TRACE"/>
+
+    <!-- Keep existing app loggers; root at DEBUG matches previous default behavior -->
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>

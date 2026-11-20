@@ -60,7 +60,7 @@
                                                                     <br/>
                                                                     <nobr>
                                                                         <g:set var="today" value="${new Date().clearTime()}"/>
-                                                                        <g:set var="sessionDateClear" value="${sessionInstance.date.clearTime()}"/>
+                                                                        <g:set var="sessionDateClear" value="${new Date(sessionInstance.date.getTime()).clearTime()}"/>
                                                                         <g:if test="${sessionDateClear >= today}">
                                                                             <span style="font-size: 10px; color: blue;">
                                                                                 <g:set var="playerLast6Days" value="${p.player.participationsInLast6Days(sessionInstance.date)}"/>
